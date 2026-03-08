@@ -1,0 +1,70 @@
+# =========================================================================
+# Diar Studio - Optimizacion de Ignorados (Git)
+# =========================================================================
+
+# 1. Dependencias de Node (Tailwind local, plugins, etc.)
+# No subimos librerias completas, solo los package.json y package-lock.json
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# 2. Archivos temporales y de compilacion (Builds)
+# Excluyo salidas generadas por compiladores (Tailwind CLI, Vite, Webpack)
+dist/
+build/
+out/
+.next/
+.nuxt/
+public/build/
+test-build.css
+
+# 3. Archivos del Sistema Operativo
+# Basura generada por Windows y macOS que no aporta al repositorio
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+ehthumbs_vista.db
+[Tt]humbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# 4. Entornos Locales y Variables de Entorno
+# Protegemos secretos, tokens y configuraciones locales
+.env
+.env.local
+.env.*.local
+*.env
+.envrc
+
+# 5. Archivos de Editores e IDEs
+# Configuraciones personales de mi entorno de desarrollo
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.tmp
+*~
+
+# 6. Logs y Cachés de Herramientas
+# Evito historiales de depuracion en la nube y cache del linter
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+.stylelintcache
+.prettiercache
+.netlify/

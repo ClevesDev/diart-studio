@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #3b83f7;
+    --color-background-light: #f5f7f8;
+    --color-background-dark: #101722;
+    --color-platinum: #f5f7f8;
+    --color-void: #0b0b0b;
+    --font-display: "Geist", sans-serif;
+    --radius-default: 0.125rem;
+    --radius-sm: 0.125rem;
+    --radius-lg: 0.25rem;
+    --radius-xl: 0.5rem;
+    --radius-full: 0.75rem;
+}
+
+@layer base {
+    body {
+        font-family: var(--font-display);
+        -webkit-font-smoothing: antialiased;
+    }
+}
+
+@layer components {
+    .swiss-grid {
+        background-image: radial-gradient(circle at 2px 2px, rgba(59, 131, 247, 0.05) 1px, transparent 0);
+        background-size: 40px 40px;
+    }
+}
+
+@keyframes fade-out-scale {
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.intro-animate {
+    view-timeline-name: --intro-scroll;
+    view-timeline-axis: block;
+    animation-timeline: --intro-scroll;
+    animation-name: fade-out-scale;
+    animation-fill-mode: both;
+    animation-range: exit 0% exit 100%;
+}
+
+.section-fade-in {
+    view-timeline-name: --section-scroll;
+    view-timeline-axis: block;
+    animation-timeline: --section-scroll;
+    animation-name: fade-in;
+    animation-fill-mode: both;
+    animation-range: entry 0% entry 50%;
+}
