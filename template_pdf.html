@@ -4,57 +4,40 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Diar Studio - Technical Specification Proposal</title>
-  <!-- Tailwind CSS v3 CDN -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <!-- Geist Font -->
-  <link href="https://fonts.googleapis.com" rel="preconnect" />
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap"
-    rel="stylesheet" />
+  <title>Diar Studio - Propuesta Técnica</title>
 
   <style>
-    :root {
+    /* Scoped Styles for PDF Generation */
+    #pdf-content {
       --bg-platinum: #f8fafc;
       --primary-blue: #3b83f7;
       --accent-pink: #f472b6;
       --void-black: #0b0b0b;
       --slate-depth: #1e293b;
-    }
+      --text-muted: #64748b;
 
-    body {
-      background-color: #e2e8f0;
-      font-family: 'Geist', sans-serif;
-      margin: 0;
-      padding: 40px 0;
-      display: flex;
-      justify-content: center;
-    }
-
-    .a4-page {
-      width: 210mm;
-      height: 297mm;
       background-color: var(--bg-platinum);
       color: var(--slate-depth);
+      font-family: 'Geist', sans-serif;
+      width: 210mm;
+      min-height: 297mm;
+      padding: 15mm 18mm;
+      margin: 0;
       position: relative;
-      padding: 25mm;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      /* Technical Grid Background */
       background-image:
         linear-gradient(rgba(59, 131, 247, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(59, 131, 247, 0.03) 1px, transparent 1px);
       background-size: 20px 20px;
+      box-sizing: border-box;
     }
 
-    .mono-tech {
+    #pdf-content .mono-tech {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       letter-spacing: -0.02em;
     }
 
-    .label-technical {
+    #pdf-content .label-technical {
       font-size: 9px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -63,22 +46,40 @@
       opacity: 0.6;
     }
 
-    .blueprint-line {
+    #pdf-content .blueprint-line {
       height: 1px;
       background: linear-gradient(to right, var(--primary-blue), transparent);
       margin: 20px 0;
     }
 
-    @media print {
-      body {
-        background: none;
-        padding: 0;
-      }
+    /* Grid layout for PDF */
+    #pdf-content .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
 
-      .a4-page {
-        box-shadow: none;
-        margin: 0;
-      }
+    #pdf-content .flex-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    #pdf-content .flex-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #pdf-content .justify-between {
+      justify-content: space-between;
+    }
+
+    #pdf-content .items-start {
+      align-items: flex-start;
+    }
+
+    #pdf-content .text-right {
+      text-align: right;
     }
   </style>
 </head>
@@ -91,29 +92,30 @@
 
     <div>
       <!-- Header Section -->
-      <header class="flex justify-between items-start">
+      <header class="flex justify-between items-start"
+        style="display: flex; justify-content: space-between; align-items: flex-start;">
         <div class="flex flex-col gap-4">
-          <!-- High-End Logo -->
-          <div class="flex items-center gap-3">
-            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-primary fill-current">
-              <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold" fill="#3b83f7">{</text>
-              <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="#0b0b0b">D</text>
-              <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="#3b83f7">R</text>
-              <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold" fill="#0b0b0b">;</text>
-            </svg>
+          <!-- Logo Inlined for reliability -->
+          <div class="flex items-center gap-3" style="display: flex; align-items: center; gap: 12px;">
+            <!-- Logo Image for max compatibility -->
+            <img src="assets/logo_pdf.png" style="width: 58px; height: 58px; display: block; object-fit: contain;"
+              alt="Diar Studio Logo">
             <div class="flex flex-col">
-              <span class="text-xl font-black uppercase tracking-tighter leading-none">Diar Studio</span>
+              <span class="text-xl font-black uppercase tracking-tighter leading-none"
+                style="font-size: 20px; font-weight: 900; letter-spacing: -0.05em; line-height: 1;">Diar Studio</span>
               <span class="label-technical leading-none mt-1">Ingeniería de Activos Digitales</span>
             </div>
           </div>
         </div>
 
         <div class="text-right">
-          <div class="inline-block border border-slate-200 p-4 bg-white/50 backdrop-blur-sm">
-            <div class="flex flex-col gap-1 items-end">
+          <div class="inline-block border border-slate-200 p-4 bg-white/50 backdrop-blur-sm"
+            style="border: 1px solid #e2e8f0; padding: 16px;">
+            <div class="flex flex-col gap-1 items-end"
+              style="display: flex; flex-direction: column; align-items: flex-end;">
               <span class="label-technical">ID de Propuesta</span>
               <span class="mono-tech font-bold text-sm" id="pdf-id">DS-QT-2026-X42</span>
-              <span class="label-technical mt-2">Fecha de Emisión</span>
+              <span class="label-technical mt-2" style="margin-top: 8px;">Fecha de Emisión</span>
               <span class="mono-tech" id="pdf-date">2026-03-09</span>
             </div>
           </div>
@@ -123,147 +125,173 @@
       <div class="blueprint-line"></div>
 
       <!-- Client & Project Scope -->
-      <section class="grid grid-cols-2 gap-12 mt-8">
+      <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 32px;">
         <div>
           <span class="label-technical block mb-3">Alcance del Proyecto</span>
-          <h2 class="text-2xl font-black uppercase tracking-tighter mb-2" id="pdf-project-name">Infraestructura Digital
-          </h2>
-          <p class="text-xs text-slate-500 leading-relaxed max-w-xs">
+          <h2 class="text-2xl font-black uppercase tracking-tighter mb-2" id="pdf-project-name"
+            style="font-size: 24px; font-weight: 900;">Infraestructura Digital</h2>
+          <p class="text-xs text-slate-500 leading-relaxed max-w-xs"
+            style="font-size: 11px; line-height: 1.5; color: #64748b;">
             Especificación técnica detallada para el desarrollo de un activo digital de alta autoridad, optimizado para
             rendimiento crítico y escalabilidad global.
           </p>
         </div>
-        <div class="border-l border-slate-200 pl-8">
+        <div class="border-l border-slate-200 pl-8" style="border-left: 1px solid #e2e8f0; padding-left: 32px;">
           <span class="label-technical block mb-3">Líder Técnico</span>
           <span class="text-sm font-bold block">ClevesDev</span>
           <span class="text-[10px] text-slate-400 block uppercase font-bold mt-1">Arquitecto Digital Principal</span>
 
-          <span class="label-technical block mt-6 mb-1">Estado</span>
-          <div class="flex items-center gap-2">
-            <span class="size-1.5 bg-green-500 rounded-full"></span>
-            <span class="mono-tech font-bold uppercase">Listo_para_Ejecutar</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Main Cost Matrix -->
-      <main class="mt-16">
-        <div class="w-full">
-          <!-- Table Header -->
-          <div class="flex items-center border-b-2 border-slate-800 pb-3 mb-6">
-            <div class="w-12 label-technical">Ref</div>
-            <div class="flex-grow label-technical">Descripción del Componente Técnico</div>
-            <div class="w-32 label-technical text-right">Asignación (USD)</div>
-          </div>
-
-          <!-- Architecture Component -->
-          <div class="flex items-center py-6 border-b border-slate-200 group">
-            <div class="w-12 mono-tech text-primary font-bold">01</div>
-            <div class="flex-grow">
-              <h3 class="text-sm font-black uppercase tracking-tight" id="pdf-arch-name">Arquitectura High-End</h3>
-              <p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mt-1">Cimiento del Sistema Core
-              </p>
-            </div>
-            <div class="w-32 mono-tech text-right font-black text-sm" id="pdf-arch-cost">$1,200.00</div>
-          </div>
-
-          <!-- Add-on Components Container -->
-          <div id="pdf-addons-container">
-            <!-- Addons will be injected here -->
-          </div>
-
-          <!-- Velocity Adjustment -->
-          <div class="flex items-center py-6 border-b border-slate-200">
-            <div class="w-12 mono-tech text-slate-300 font-bold">--</div>
-            <div class="flex-grow">
-              <h3 class="text-xs font-bold uppercase text-slate-500">Multiplicador de Velocidad de Ejecución</h3>
-            </div>
-            <div class="w-32 mono-tech text-right font-bold text-slate-400" id="pdf-velocity">1.0x</div>
-          </div>
-        </div>
-
-        <!-- Financial Summary -->
-        <div class="flex justify-end mt-12">
-          <div class="w-80 bg-slate-900 text-white p-8 relative">
-            <div class="absolute top-0 right-0 w-8 h-8 border-t border-r border-primary/50"></div>
-
-            <div class="flex justify-between items-center mb-6">
-              <span class="label-technical text-white/40">Presupuesto Total (USD)</span>
-              <span class="mono-tech text-[10px] bg-primary/20 px-2 py-0.5 rounded italic">Auditado</span>
-            </div>
-
-            <div class="flex justify-between items-baseline">
-              <span class="text-4xl font-black tracking-tighter" id="pdf-total">$1,200.00</span>
-            </div>
-
-            <div class="mt-8 pt-6 border-t border-white/10 flex flex-col gap-2">
-              <div class="flex justify-between text-[8px] mono-tech text-white/30 truncate">
-                <span>HASH_LOCK:</span>
-                <span>f827-x821-p912-q001</span>
-              </div>
-              <div class="flex justify-between text-[8px] mono-tech text-white/30">
-                <span>CYBER_INSURANCE:</span>
-                <span>LOCKED</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
-
-    <!-- Footer Section -->
-    <footer class="mt-12 border-t pt-8 border-slate-200">
-      <div class="flex justify-between items-end">
-        <div class="max-w-xs">
-          <p class="text-[9px] text-slate-400 font-bold uppercase leading-relaxed tracking-widest">
-            Este documento constituye una cotización técnica oficial de Diar Studio. Los términos y especificaciones
-            están protegidos por protocolos de integridad digital. Validez de 15 días tras su emisión.
-          </p>
-        </div>
-
-        <div class="flex gap-12 items-end">
-          <!-- Technical Signature -->
-          <div class="text-right flex flex-col items-end">
-            <div class="mono-tech text-[8px] italic text-primary mb-2">// auth_digital_clevesdev_encriptado //</div>
-            <div class="text-xl font-black italic tracking-tighter mb-1 border-b-2 border-slate-800 px-4">DR; STUDIO ENG
-            </div>
-            <span class="label-technical">Firma Autorizada</span>
-          </div>
-
-          <!-- Mini QR Aesthetic -->
-          <div class="size-16 border border-slate-200 p-1 flex flex-wrap gap-[1px]">
-            <div class="size-1 bg-slate-800"></div>
-            <div class="size-1 bg-slate-200"></div>
-            <div class="size-1 bg-slate-800"></div>
-            <div class="size-1 bg-primary"></div>
-            <div class="size-1 bg-slate-200"></div>
-            <div class="size-1 bg-primary"></div>
-            <div class="size-1 bg-slate-800"></div>
-            <div class="size-1 bg-slate-200"></div>
-            <div class="size-1 bg-slate-800"></div>
-            <div class="size-1 bg-slate-200"></div>
-            <div class="size-1 bg-slate-800"></div>
-            <div class="size-1 bg-slate-200"></div>
-            <div class="size-1 bg-primary"></div>
-            <div class="size-1 bg-slate-800"></div>
-            <div class="size-1 bg-slate-200"></div>
-            <div class="size-1 bg-primary"></div>
+          <div class="mt-4 flex items-center gap-2"
+            style="margin-top: 16px; display: flex; align-items: center; gap: 8px;">
+            <div class="size-2 rounded-full bg-emerald-500"
+              style="width: 8px; height: 8px; border-radius: 9999px; background-color: #10b981;"></div>
+            <span class="mono-tech text-[9px] text-emerald-600 font-bold uppercase">Estado: Validación OK</span>
           </div>
         </div>
       </div>
 
-      <!-- Payment Gateways -->
-      <div class="mt-8 flex justify-center items-center gap-6 opacity-40 grayscale">
-        <img src="assets/Iconos frameworks/visa.svg" class="h-4" alt="Visa">
-        <img src="assets/Iconos frameworks/mastercard.svg" class="h-6" alt="Mastercard">
-        <img src="assets/Iconos frameworks/paypal.svg" class="h-5" alt="PayPal">
-        <img src="assets/Iconos frameworks/google-pay.svg" class="h-5" alt="Google Pay">
+      <div class="mt-12" style="margin-top: 48px;">
+        <span class="label-technical block mb-6">Arquitectura Seleccionada</span>
+        <div class="flex justify-between items-end border-b-2 border-slate-900 pb-2"
+          style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #0f172a; padding-bottom: 8px;">
+          <span class="text-2xl font-black uppercase tracking-tighter" id="pdf-arch-name">---</span>
+          <span class="mono-tech text-xl font-black" id="pdf-arch-cost">$0.00</span>
+        </div>
+      </div>
+
+      <!-- Sub-Technical Specs -->
+      <div class="mt-8 bg-slate-50 border border-slate-200 p-6"
+        style="margin-top: 32px; background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 24px;">
+        <span class="label-technical block mb-4">Módulos de ingeniería & Addons</span>
+        <div id="pdf-addons-container" class="space-y-4">
+          <!-- Addons dynamic injector -->
+          <div class="flex items-center py-4 border-b border-slate-100">
+            <span class="text-xs text-slate-400 italic">No se han seleccionado módulos adicionales.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Budget Summary -->
+    <footer class="mt-12" style="margin-top: 48px;">
+      <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+        <div>
+          <span class="label-technical block mb-4">Cláusula Técnica</span>
+          <p class="text-[9px] text-slate-400 leading-tight uppercase font-medium tracking-tight">
+            Esta propuesta constituye una estimación técnica basada en requerimientos declarados.
+            El despliegue está sujeto a protocolos de seguridad Diar Studio v4.0.
+          </p>
+        </div>
+        <div class="bg-slate-900 text-white p-8 relative overflow-hidden"
+          style="background-color: #0f172a; color: white; padding: 32px; position: relative; overflow: hidden;">
+          <div class="absolute top-0 right-0 p-4">
+            <div class="flex gap-1">
+              <div class="size-1 bg-primary" style="width: 4px; height: 4px; background-color: #3b83f7;"></div>
+              <div class="size-1 bg-slate-200" style="width: 4px; height: 4px; background-color: #e2e8f0;"></div>
+            </div>
+          </div>
+          <span class="label-technical block mb-2 text-primary" style="color: #3b83f7;">Inversión Total Estimada</span>
+          <div class="text-4xl font-black tracking-tighter mb-1" id="pdf-total"
+            style="font-size: 36px; font-weight: 900; letter-spacing: -0.05em;">$0.00</div>
+          <div class="flex justify-between items-center mt-4 border-t border-white/10 pt-4"
+            style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px;">
+            <span class="label-technical text-white">Coeficiente Rush</span>
+            <span class="mono-tech font-bold" id="pdf-velocity">1.0x</span>
+          </div>
+
+          <div class="mt-6 flex gap-1 justify-end opacity-20"
+            style="margin-top: 24px; display: flex; gap: 4px; justify-content: flex-end; opacity: 0.2;">
+            <div class="size-1 bg-primary" style="width: 4px; height: 4px; background-color: #3b83f7;"></div>
+            <div class="size-1 bg-slate-800" style="width: 4px; height: 4px; background-color: #1e293b;"></div>
+            <div class="size-1 bg-slate-200" style="width: 4px; height: 4px; background-color: #e2e8f0;"></div>
+            <div class="size-1 bg-primary" style="width: 4px; height: 4px; background-color: #3b83f7;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Gateways Inlined for reliability -->
+      <div class="mt-8 flex justify-center items-center gap-6 opacity-40 grayscale"
+        style="margin-top: 32px; display: flex; justify-content: center; align-items: center; gap: 24px; opacity: 0.4; filter: grayscale(100%);">
+        <!-- Visa -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 64 64">
+          <path fill="#3C58BF" d="m23.6 41 3.2-18h5l-3.1 18z"></path>
+          <path fill="#293688" d="m23.6 41 4.1-18h4.1l-3.1 18z"></path>
+          <path fill="#3C58BF"
+            d="M46.8 23.2c-1-.4-2.6-.8-4.6-.8-5 0-8.6 2.5-8.6 6.1 0 2.7 2.5 4.1 4.5 5 2 .9 2.6 1.5 2.6 2.3 0 1.2-1.6 1.8-3 1.8-2 0-3.1-.3-4.8-1l-.7-.3-.7 4.1c1.2.5 3.4 1 5.7 1 5.3 0 8.8-2.5 8.8-6.3 0-2.1-1.3-3.7-4.3-5-1.8-.9-2.9-1.4-2.9-2.3 0-.8.9-1.6 2.9-1.6 1.7 0 2.9.3 3.8.7l.5.2.8-3.9z">
+          </path>
+          <path fill="#293688"
+            d="M46.8 23.2c-1-.4-2.6-.8-4.6-.8-5 0-7.7 2.5-7.7 6.1 0 2.7 1.6 4.1 3.6 5 2 .9 2.6 1.5 2.6 2.3 0 1.2-1.6 1.8-3 1.8-2 0-3.1-.3-4.8-1l-.7-.3-.7 4.1c1.2.5 3.4 1 5.7 1 5.3 0 8.8-2.5 8.8-6.3 0-2.1-1.3-3.7-4.3-5-1.8-.9-2.9-1.4-2.9-2.3 0-.8.9-1.6 2.9-1.6 1.7 0 2.9.3 3.8.7l.5.2.8-3.9z">
+          </path>
+          <path fill="#3C58BF"
+            d="M55.4 23c-1.2 0-2.1.1-2.6 1.3L45.3 41h5.4l1-3h6.4l.6 3h4.8l-4.2-18h-3.9zm-2.3 12c.3-.9 2-5.3 2-5.3s.4-1.1.7-1.8l.3 1.7s1 4.5 1.2 5.5h-4.2V35z">
+          </path>
+          <path fill="#293688"
+            d="M56.6 23c-1.2 0-2.1.1-2.6 1.3L45.3 41h5.4l1-3h6.4l.6 3h4.8l-4.2-18h-2.7zm-3.5 12c.4-1 2-5.3 2-5.3s.4-1.1.7-1.8l.3 1.7s1 4.5 1.2 5.5h-4.2V35z">
+          </path>
+          <path fill="#3C58BF" d="m14.4 35.6-.5-2.6c-.9-3-3.8-6.3-7-7.9l4.5 16h5.4l8.1-18h-5.4l-5.1 12.5z"></path>
+          <path fill="#293688" d="m14.4 35.6-.5-2.6c-.9-3-3.8-6.3-7-7.9l4.5 16h5.4l8.1-18h-4.4l-6.1 12.5z"></path>
+          <path fill="#FFBC00" d="m.5 23 .9.2c6.4 1.5 10.8 5.3 12.5 9.8l-1.8-8.5c-.3-1.2-1.2-1.5-2.3-1.5H.5z"></path>
+          <path fill="#F7981D" d="M.5 23c6.4 1.5 11.7 5.4 13.4 9.9l-1.7-7.1c-.3-1.2-1.3-1.9-2.4-1.9L.5 23z"></path>
+          <path fill="#ED7C00" d="M.5 23c6.4 1.5 11.7 5.4 13.4 9.9L12.7 29c-.3-1.2-.7-2.4-2.1-2.9L.5 23z"></path>
+        </svg>
+        <!-- Mastercard -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
+          <path fill="#FF5F00" d="M15.245 17.831h-6.49V6.168h6.49v11.663z"></path>
+          <path fill="#EB001B"
+            d="M9.167 12A7.404 7.404 0 0 1 12 6.169 7.417 7.417 0 0 0 0 12a7.417 7.417 0 0 0 11.999 5.831A7.406 7.406 0 0 1 9.167 12z">
+          </path>
+          <path fill="#F79E1B"
+            d="M24 12a7.417 7.417 0 0 1-12 5.831c1.725-1.358 2.833-3.465 2.833-5.831S13.725 7.527 12 6.169A7.417 7.417 0 0 1 24 12z">
+          </path>
+        </svg>
+        <!-- PayPal -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="20" viewBox="-11.153 -13.144 326.05 105.914">
+          <g transform="matrix(2.07675 0 0 -2.07675 -11.153 92.77)">
+            <path fill="#003087"
+              d="M32.419 40.982c-1.674 1.908-4.7 2.726-8.571 2.726H12.613a1.609 1.609 0 0 1-1.59-1.357L6.347 12.68a.964.964 0 0 1 .953-1.114h6.936l1.742 11.049-.054-.346a1.604 1.604 0 0 0 1.583 1.357h3.296c6.475 0 11.545 2.63 13.026 10.238.044.225.082.444.115.658.44 2.812-.003 4.726-1.524 6.459">
+            </path>
+            <path fill="#009cde"
+              d="M117.331 26.863c-.424-2.784-2.55-2.784-4.606-2.784h-1.17l.821 5.198c.05.314.32.545.638.545h.537c1.4 0 2.722 0 3.404-.797.407-.477.53-1.185.376-2.162m-.895 7.264h-7.756a1.08 1.08 0 0 1-1.066-.91L104.48 13.33a.647.647 0 0 1 .638-.747h3.98c.371 0 .687.27.745.636l.89 5.64c.082.523.534.91 1.064.91h2.454c5.11 0 8.058 2.471 8.828 7.372.347 2.142.014 3.826-.989 5.005-1.103 1.296-3.058 1.982-5.653 1.982">
+            </path>
+            <path fill="#003087"
+              d="M62.011 26.863c-.424-2.784-2.55-2.784-4.607-2.784h-1.17l.821 5.198c.05.314.32.545.638.545h.537c1.4 0 2.722 0 3.404-.797.408-.477.531-1.185.377-2.162m-.895 7.264H53.36c-.53 0-.982-.386-1.065-.91L49.16 13.33a.646.646 0 0 1 .638-.747h3.704c.53 0 .981.386 1.064.91l.847 5.365c.082.524.534.91 1.064.91h2.454c5.11 0 8.058 2.472 8.828 7.373.347 2.142.014 3.826-.989 5.005-1.103 1.296-3.058 1.982-5.653 1.982M79.123 19.723c-.36-2.122-2.043-3.547-4.192-3.547-1.077 0-1.94.347-2.494 1.003-.55.65-.756 1.577-.582 2.608.334 2.104 2.046 3.574 4.162 3.574 1.055 0 1.91-.35 2.476-1.012.569-.667.793-1.599.63-2.626m5.176 7.23h-3.714a.647.647 0 0 1-.64-.547l-.162-1.038-.26.376c-.804 1.167-2.597 1.558-4.387 1.558-4.103 0-7.608-3.11-8.29-7.47-.355-2.177.149-4.256 1.383-5.707 1.133-1.333 2.75-1.888 4.677-1.888 3.308 0 5.142 2.124 5.142 2.124l-.166-1.032a.646.646 0 0 1 .639-.747h3.344c.53 0 .982.385 1.065.91l2.008 12.713a.647.647 0 0 1-.64.747">
+            </path>
+            <path fill="#009cde"
+              d="M134.443 19.723c-.36-2.122-2.043-3.547-4.192-3.547-1.077 0-1.94.347-2.494 1.003-.55.65-.756 1.577-.582 2.608.334 2.104 2.045 3.574 4.162 3.574 1.055 0 1.91-.35 2.476-1.012.569-.667.793-1.599.63-2.626m5.176 7.23h-3.714a.647.647 0 0 1-.64-.547l-.162-1.038-.26.376c-.804 1.167-2.597 1.558-4.387 1.558-4.102 0-7.607-3.11-8.29-7.47-.355-2.177.15-4.256 1.384-5.707 1.133-1.333 2.75-1.888 4.677-1.888 3.309 0 5.143 2.124 5.143 2.124l-.166-1.032a.644.644 0 0 1 .637-.747h3.343c.53 0 .982.385 1.066.91l2.008 12.713a.647.647 0 0 1-.64.747">
+            </path>
+          </g>
+        </svg>
+        <!-- Google Pay -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 24 24">
+          <path fill="#5F6368"
+            d="M10.917 11.496V14.4h-.922V7.227h2.444a2.206 2.206 0 0 1 1.583.621c.429.386.67.938.661 1.514a1.985 1.985 0 0 1-.661 1.523c-.428.408-.956.612-1.583.611h-1.522zm0-3.386v2.505h1.545c.343.01.673-.124.912-.371.484-.47.496-1.245.024-1.729l-.024-.024a1.204 1.204 0 0 0-.912-.381h-1.545zm5.89 1.222c.682 0 1.219.182 1.613.546.394.364.591.864.591 1.497v3.026h-.881v-.682h-.04c-.382.561-.89.842-1.523.842-.541 0-.993-.16-1.357-.481a1.538 1.538 0 0 1-.546-1.202c0-.508.192-.912.576-1.212.384-.3.896-.451 1.538-.451.547 0 .998.1 1.352.3v-.211a1.046 1.046 0 0 0-.381-.815 1.304 1.304 0 0 0-.89-.336c-.514 0-.922.217-1.222.651l-.811-.511c.445-.641 1.106-.961 1.981-.961zm-1.193 3.566a.739.739 0 0 0 .305.601c.204.16.457.246.716.24a1.472 1.472 0 0 0 1.037-.431c.305-.288.458-.624.458-1.012-.288-.229-.688-.344-1.202-.344-.374 0-.687.09-.937.271-.251.185-.377.408-.377.675zm8.457-3.406-3.077 7.073h-.951l1.142-2.475-2.025-4.598h1.002l1.463 3.526h.02l1.423-3.526h1.003z">
+          </path>
+          <path fill="#4285F4"
+            d="M8.079 11.7c0-.281-.023-.561-.071-.838H4.121v1.587h2.226a1.905 1.905 0 0 1-.823 1.252v1.031h1.329c.778-.716 1.226-1.777 1.226-3.032z">
+          </path>
+          <path fill="#34A853"
+            d="M4.121 15.728c1.112 0 2.049-.365 2.732-.995l-1.329-1.031c-.37.251-.846.394-1.403.394-1.075 0-1.987-.725-2.314-1.701H.439v1.062a4.12 4.12 0 0 0 3.682 2.271z">
+          </path>
+          <path fill="#FBBC04"
+            d="M1.808 12.395a2.464 2.464 0 0 1 0-1.578V9.756H.439a4.124 4.124 0 0 0 0 3.702l1.369-1.063z"></path>
+          <path fill="#EA4335"
+            d="M4.121 9.117a2.24 2.24 0 0 1 1.581.618l1.177-1.176a3.968 3.968 0 0 0-2.758-1.074A4.12 4.12 0 0 0 .439 9.756l1.369 1.062c.326-.977 1.238-1.701 2.313-1.701z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="mt-8 flex justify-between items-center opacity-20 mono-tech text-[7px]"
+        style="margin-top: 32px; display: flex; justify-content: space-between; align-items: center; opacity: 0.2;">
+        <span>DIAR STUDIO // TECHNICAL INFRASTRUCTURE v4.0</span>
+        <span>AUTH_SIG: CLEVES_DEV_SECURED</span>
       </div>
     </footer>
 
     <!-- Decorative Corners -->
-    <div class="absolute top-0 right-0 w-32 h-32 border-t-4 border-r-4 border-slate-100 pointer-events-none"></div>
-    <div class="absolute bottom-0 left-0 w-32 h-32 border-b-4 border-l-4 border-slate-100 pointer-events-none"></div>
+    <div class="absolute top-0 right-0 w-32 h-32 border-t-4 border-r-4 border-slate-100 pointer-events-none"
+      style="border-top-width: 4px; border-right-width: 4px; border-color: #f1f5f9;"></div>
+    <div class="absolute bottom-0 left-0 w-32 h-32 border-b-4 border-l-4 border-slate-100 pointer-events-none"
+      style="border-bottom-width: 4px; border-left-width: 4px; border-color: #f1f5f9;"></div>
   </div>
 </body>
 

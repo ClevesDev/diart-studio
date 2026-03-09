@@ -151,6 +151,9 @@
 <body
     class="bg-background-dark text-slate-100 transition-colors duration-300 swiss-grid min-h-screen overflow-x-hidden">
 
+    <!-- Pre-rendered PDF Container (Kept in layout but invisible to avoid capture issues) -->
+    <div id="pdf-container" style="visibility: hidden; position: absolute; top: 0; left: -9999px; z-index: -100;"></div>
+
     <div id="audit-bot" class="fixed left-6 z-[99] pointer-events-none transition-all duration-1000"
         style="top: 30%; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); will-change: top, transform, left;"
         data-state="idle" aria-hidden="true">
@@ -200,7 +203,7 @@
             </nav>
             <a href="contact.html"
                 class="hidden sm:inline-flex items-center justify-center bg-[#f5f7f8] text-[#0b0b0b] px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group">
-                Initialize Engineering
+                Iniciar Proyecto
                 <span class="ml-2 font-mono transition-transform duration-300 group-hover:translate-x-1"
                     aria-hidden="true">_</span>
             </a>
@@ -301,8 +304,8 @@
                 <!-- 02. Mejoras -->
                 <div class="space-y-6">
                     <h3 class="text-xs font-bold text-slate-500 uppercase tracking-[0.3em] flex items-center gap-3">
-                        <span class="size-1 bg-neon-pink" style="background-color: #f472b6;"></span> 02. Add-ons
-                        Técnicos
+                        <span class="size-1 bg-neon-pink" style="background-color: #f472b6;"></span> 02. Componentes
+                        Adicionales
                     </h3>
                     <div class="grid sm:grid-cols-2 gap-4">
                         <label
@@ -400,8 +403,10 @@
                                 <span
                                     class="text-xs font-black uppercase tracking-widest text-slate-300 block mb-1">Velocidad
                                     de Ejecución</span>
-                                <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Ajuste de
-                                    despliegue crítico</span>
+                                <span
+                                    class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Requerimientos
+                                    de
+                                    entrega técnica</span>
                             </div>
                             <span id="rush-label" class="text-lg font-black text-primary uppercase">Estándar
                                 (1.0x)</span>
@@ -523,7 +528,6 @@
         </div>
     </footer>
 
-    <div id="pdf-container" style="display: none; position: absolute; left: -9999px;"></div>
 
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -682,20 +686,22 @@
             syncPDF();
         };
 
-        // Load External PDF Template & Styles
+        // Load External PDF Template
         fetch('template_pdf.html')
             .then(response => response.text())
             .then(html => {
                 const doc = new DOMParser().parseFromString(html, 'text/html');
 
-                // Inject body content
-                const content = doc.querySelector('body').innerHTML;
+                // Inject body content (Trimmed to avoid empty spaces)
+                const content = doc.querySelector('body').innerHTML.trim();
                 document.getElementById('pdf-container').innerHTML = content;
 
-                // Inject style tags
+                // Inject style tags (Scoped in template_pdf.html to avoid leak)
                 const styles = doc.querySelectorAll('style');
                 styles.forEach(style => {
-                    document.head.appendChild(style);
+                    const newStyle = document.createElement('style');
+                    newStyle.textContent = style.textContent;
+                    document.head.appendChild(newStyle);
                 });
 
                 updatePrice(); // Initial sync
@@ -765,17 +771,22 @@
                         backgroundColor: '#f8fafc',
                         useCORS: true,
                         allowTaint: true,
-                        letterRendering: true
+                        letterRendering: true,
+                        scrollY: 0,
+                        scrollX: 0
                     },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
                 };
 
-                // Temporarily show container off-screen
+                // Temporarily show container for capture
                 const container = document.getElementById('pdf-container');
-                container.style.display = 'block';
+                container.style.visibility = 'visible';
+                container.style.height = 'auto';
 
                 html2pdf().set(opt).from(element).save().then(() => {
-                    container.style.display = 'none';
+                    container.style.visibility = 'hidden';
+                    container.style.height = '0';
                     btn.innerHTML = originalText;
                     btn.style.opacity = '1';
                     btn.disabled = false;
@@ -788,7 +799,8 @@
                 }).catch(err => {
                     console.error("PDF Generation Error:", err);
                     alert("Error al generar el PDF. Verifique la conexión o intente nuevamente.");
-                    container.style.display = 'none';
+                    container.style.visibility = 'hidden';
+                    container.style.height = '0';
                     btn.innerHTML = originalText;
                     btn.disabled = false;
                 });
