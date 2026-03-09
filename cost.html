@@ -15,7 +15,7 @@
 
     <!-- ENTERPRISE SECURITY POLICY -->
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://lh3.googleusercontent.com data:; connect-src 'self';" />
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://lh3.googleusercontent.com data: blob:; connect-src 'self';" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
@@ -682,13 +682,22 @@
             syncPDF();
         };
 
-        // Load External PDF Template
+        // Load External PDF Template & Styles
         fetch('template_pdf.html')
             .then(response => response.text())
             .then(html => {
                 const doc = new DOMParser().parseFromString(html, 'text/html');
+
+                // Inject body content
                 const content = doc.querySelector('body').innerHTML;
                 document.getElementById('pdf-container').innerHTML = content;
+
+                // Inject style tags
+                const styles = doc.querySelectorAll('style');
+                styles.forEach(style => {
+                    document.head.appendChild(style);
+                });
+
                 updatePrice(); // Initial sync
             });
 
@@ -727,15 +736,37 @@
 
             setTimeout(() => {
                 clearInterval(interval);
+
+                if (typeof html2pdf === 'undefined') {
+                    alert("Error: El motor de PDF no cargó correctamente. Reintente en un momento.");
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                    return;
+                }
+
                 btn.innerHTML = `<span class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">check_circle</span> Iniciando Descarga</span>`;
 
-                const element = document.getElementById('pdf-content'); // This ID is inside the template
+                const element = document.getElementById('pdf-content');
+                if (!element) {
+                    console.error("Critical Error: #pdf-content not found.");
+                    alert("Error técnico: No se pudo localizar la estructura del PDF. Reintegre el sistema.");
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    return;
+                }
 
                 const opt = {
                     margin: 0,
-                    filename: 'DiarStudio_Technical_Proposal.pdf',
+                    filename: 'DiarStudio_Propuesta_Tecnica.pdf',
                     image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, backgroundColor: '#f8fafc', useCORS: true, allowTaint: true },
+                    html2canvas: {
+                        scale: 2,
+                        backgroundColor: '#f8fafc',
+                        useCORS: true,
+                        allowTaint: true,
+                        letterRendering: true
+                    },
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
 
@@ -754,6 +785,12 @@
                     setTimeout(() => {
                         showBotMessage("Documento listo, te espero para discutir los detalles🚀");
                     }, 500);
+                }).catch(err => {
+                    console.error("PDF Generation Error:", err);
+                    alert("Error al generar el PDF. Verifique la conexión o intente nuevamente.");
+                    container.style.display = 'none';
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
                 });
             }, 4000);
         });
