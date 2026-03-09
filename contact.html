@@ -19,7 +19,7 @@
 
     <!-- ENTERPRISE SECURITY POLICY -->
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://lh3.googleusercontent.com data:; connect-src 'self';" />
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://lh3.googleusercontent.com data:; connect-src 'self';" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
@@ -54,85 +54,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
 
-    <style>
-        /* --- [2] BASE & TOKENS --- */
-        :root {
-            --color-primary: #3b83f7;
-            --color-neon-pink: #f472b6;
-            --color-platinum: #f5f7f8;
-            --color-void: #0b0b0b;
-            --bg-light: #f5f7f8;
-            --bg-dark: #101722;
-        }
-
-        body {
-            font-family: 'Geist', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .glass-effect {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        .tracking-widest-xs {
-            letter-spacing: 0.2em;
-        }
-
-        /* --- ATMOSPHERIC DYNAMIC BACKGROUND --- */
-        @keyframes ambient-breathing {
-
-            0%,
-            100% {
-                opacity: 0.12;
-                transform: translate(0, 0) scale(1);
-            }
-
-            33% {
-                opacity: 0.2;
-                transform: translate(2%, 1%) scale(1.05);
-            }
-
-            66% {
-                opacity: 0.15;
-                transform: translate(-1%, 2%) scale(0.98);
-            }
-        }
-
-        .dynamic-bg-surface {
-            position: fixed;
-            inset: 0;
-            z-index: -20;
-            background: var(--bg-dark);
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .ambient-light {
-            position: absolute;
-            width: 70vw;
-            height: 70vh;
-            border-radius: 50%;
-            filter: blur(140px);
-            opacity: 0.12;
-            will-change: transform, opacity;
-            animation: ambient-breathing 18s ease-in-out infinite;
-        }
-
-        .light-left {
-            top: -15%;
-            left: -25%;
-            background: radial-gradient(circle, var(--color-primary), transparent 70%);
-        }
-
-        .light-right {
-            bottom: -15%;
-            right: -25%;
-            animation-delay: -7s;
-            background: radial-gradient(circle, var(--color-neon-pink), transparent 70%);
-            opacity: 0.1;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/style.css" />
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
@@ -171,7 +93,7 @@
                         href="index.html#contact">Contacto</a>
                 </nav>
                 <a href="index.html"
-                    class="flex min-w-[120px] cursor-pointer items-center justify-center bg-[#f5f7f8] text-[#0b0b0b] px-5 py-2 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group">
+                    class="flex min-w-[120px] cursor-pointer items-center justify-center bg-background-light text-void px-5 py-2 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group">
                     <span>Return Terminal</span>
                 </a>
             </div>
@@ -369,7 +291,7 @@
                             </div>
                         </div>
                         <button
-                            class="w-full group relative flex items-center justify-center gap-3 bg-[#f5f7f8] text-[#0b0b0b] px-8 py-4 rounded-sm font-semibold text-sm uppercase tracking-tight border border-black/5 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(59,131,247,0.35)] active:scale-95"
+                            class="w-full group relative flex items-center justify-center gap-3 bg-background-light text-void px-8 py-4 rounded-sm font-semibold text-sm uppercase tracking-tight border border-black/5 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(59,131,247,0.35)] active:scale-95"
                             type="submit" name="submit-btn">
                             <span>Comienza tu proyecto</span>
                             <span
@@ -492,25 +414,7 @@
             }
         });
     </script>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#3b83f7",
-                        "background-light": "#f5f7f8",
-                        "background-dark": "#101722",
-                        "platinum": "#f5f7f8",
-                        "void": "#0b0b0b"
-                    },
-                    fontFamily: { "display": ["Geist", "sans-serif"] },
-                    borderRadius: { "DEFAULT": "0.125rem", "sm": "0.125rem", "lg": "0.25rem", "full": "0.75rem" }
-                }
-            }
-        };
-    </script>
+    <!-- No more CDN or Inline Config -->
 </body>
 
 </html>

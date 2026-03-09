@@ -194,6 +194,15 @@
         transform: scale(1);
         bottom: 130%;
     }
+
+    .glass-effect {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    .tracking-widest-xs {
+        letter-spacing: 0.2rem;
+    }
 }
 
 @layer utilities {
