@@ -93,8 +93,8 @@
       "prerender": [
         {
           "source": "list",
-          "urls": ["contact.html"],
-          "where": { "href_matches": "contact.html" },
+          "urls": ["contact.html", "cost.html"],
+          "where": { "href_matches": "(contact|cost)\\.html" },
           "eagerness": "moderate"
         }
       ]
@@ -104,378 +104,37 @@
     <!-- ASSETS: FONTS & ICONS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;800&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
 
-    <style>
-        /* --- [2] BASE & TOKENS --- */
-        :root {
-            --color-primary: #3b83f7;
-            --color-neon-pink: #f472b6;
-            --color-platinum: #f5f7f8;
-            --color-void: #0b0b0b;
-            --bg-light: #f5f7f8;
-            --bg-dark: #101722;
-        }
+    <!-- PRODUCTION CSS (Tailwind v4.0 Compiled) -->
+    <link rel="stylesheet" href="./css/style.css" />
 
-        body {
-            font-family: 'Geist', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .swiss-grid {
-            background-image: radial-gradient(circle at 2px 2px, rgba(59, 131, 247, 0.05) 1px, transparent 0);
-            background-size: 40px 40px;
-        }
-
-        /* --- [3] BRAND COMPONENTS --- */
-        .polished-silver-ingot {
-            background-image: linear-gradient(120deg, #E2E8F0 0%, #FFFFFF 25%, #94A3B8 50%, #F8FAFC 75%, #475569 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0px 0px 1px rgba(255, 255, 255, 0.4));
-            font-weight: 900;
-            letter-spacing: -0.02em;
-        }
-
-        .platinum-blue-accent {
-            background-image: linear-gradient(120deg, #93C5FD 0%, #FFFFFF 30%, #3B83F7 60%, #1D4ED8 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0px 0px 2px rgba(59, 131, 247, 0.3));
-            font-weight: 900;
-            letter-spacing: -0.02em;
-        }
-
-        .photon-orb {
-            position: absolute;
-            left: -100px;
-            top: 50%;
-            width: 14px;
-            height: 14px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 25px var(--color-primary), 0 0 50px var(--color-primary);
-            pointer-events: none;
-            z-index: 50;
-            opacity: 0;
-            will-change: transform, opacity, filter;
-        }
-
-        @keyframes photon-path-impact {
-            0% {
-                transform: translate3d(0, -50%, 0) scale(0.5);
-                opacity: 0;
-                filter: blur(0);
-            }
-
-            15% {
-                opacity: 1;
-                filter: blur(2px);
-            }
-
-            80% {
-                transform: translate3d(800px, -50%, 0) scale(1.5);
-                opacity: 1;
-                filter: blur(12px);
-                box-shadow: 0 0 40px var(--color-primary);
-            }
-
-            85% {
-                transform: translate3d(850px, -50%, 0) scale(20);
-                opacity: 0.9;
-                filter: blur(0);
-                box-shadow: 0 0 150px 80px #fff, 0 0 200px 100px var(--color-primary);
-            }
-
-            100% {
-                transform: translate3d(900px, -50%, 0) scale(30);
-                opacity: 0;
-            }
-        }
-
-        .reveal-text-shimmer {
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, var(--color-primary) 50%, #fff 100%);
-            background-size: 200% auto;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: rgba(255, 255, 255, 0.15);
-            display: inline-block;
-            will-change: background-position, filter;
-        }
-
-        @keyframes text-reveal-sequence {
-            0% {
-                background-position: -200% center;
-                filter: brightness(1);
-            }
-
-            10% {
-                filter: brightness(1.5);
-            }
-
-            40% {
-                filter: brightness(1);
-            }
-
-            100% {
-                background-position: 200% center;
-                -webkit-text-fill-color: #fff;
-                filter: brightness(1);
-            }
-        }
-
-        .animate-photon {
-            animation: photon-path-impact 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        .animate-reveal {
-            animation: text-reveal-sequence 1.4s ease-out forwards;
-            animation-delay: 1.8s;
-        }
-
-        .terminal-key {
-            color: var(--color-primary);
-        }
-
-        .terminal-val {
-            color: var(--color-neon-pink);
-            text-shadow: 0 0 8px rgba(244, 114, 182, 0.5);
-        }
-
-        .terminal-txt {
-            color: #f8fafc;
-        }
-
-        /* --- [4] MOTION SYSTEM --- */
-        @keyframes fade-out-scale {
-            to {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-        }
-
-        @keyframes fade-in {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes focus-zoom {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes subtle-float {
-            from {
-                transform: scale(1) translateY(0);
-            }
-
-            to {
-                transform: scale(1.02) translateY(-2px);
-            }
-        }
-
-        @keyframes typing {
-            from {
-                --p: 0%;
-            }
-
-            to {
-                --p: 100%;
-            }
-        }
-
-        @keyframes scan-shake {
-
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-
-            25% {
-                transform: translateX(-2px);
-            }
-
-            75% {
-                transform: translateX(2px);
-            }
-        }
-
-
-        @property --p {
-            syntax: '<percentage>';
-            inherits: false;
-            initial-value: 0%;
-        }
-
-        .intro-animate {
-            view-timeline: --intro-scroll block;
-            animation-timeline: --intro-scroll;
-            animation-name: fade-out-scale;
-            animation-fill-mode: both;
-            animation-range: exit 10% exit 90%;
-        }
-
-        .section-fade-in {
-            view-timeline: --section-scroll block;
-            animation-timeline: --section-scroll;
-            animation-name: fade-in;
-            animation-fill-mode: both;
-            animation-range: entry 0% entry 50%;
-        }
-
-        .cta-focus-zoom {
-            view-timeline: --cta-zoom block;
-            animation-timeline: --cta-zoom;
-            animation-name: focus-zoom;
-            animation-fill-mode: both;
-            animation-range: entry 0% cover 50%;
-        }
-
-        .hero-breathing {
-            animation: subtle-float 6s ease-in-out infinite alternate;
-        }
-
-        .terminal-typing {
-            animation: typing linear both;
-            animation-timeline: view();
-            animation-range: entry 20% cover 50%;
-            mask-image: linear-gradient(to bottom, black var(--p), transparent var(--p));
-            -webkit-mask-image: linear-gradient(to bottom, black var(--p), transparent var(--p));
-        }
-
-        /* --- AUDIT-BOT ASSISTANT --- */
-        @keyframes levitate {
-
-            0%,
-            100% {
-                transform: translate3d(0, 0, 0);
-            }
-
-            50% {
-                transform: translate3d(0, -10px, 0);
-            }
-        }
-
-        @keyframes eye-pulse-blue {
-
-            0%,
-            100% {
-                box-shadow: 0 0 5px var(--color-primary);
-            }
-
-            50% {
-                box-shadow: 0 0 15px var(--color-primary);
-            }
-        }
-
-        @keyframes eye-pulse-pink {
-
-            0%,
-            100% {
-                box-shadow: 0 0 5px var(--color-neon-pink);
-            }
-
-            50% {
-                box-shadow: 0 0 20px var(--color-neon-pink);
-            }
-        }
-
-        .bot-levitate {
-            animation: levitate 4s ease-in-out infinite;
-            will-change: transform;
-        }
-
-        #audit-bot[data-state="idle"] .bot-eye-fill {
-            fill: #FBBF24;
-        }
-
-        #audit-bot[data-state="audit"] .bot-eye-fill,
-        #audit-bot[data-state="handshake"] .bot-eye-fill {
-            fill: var(--color-neon-pink);
-        }
-
-        #audit-bot[data-state="audit"] .bot-body,
-        #audit-bot[data-state="handshake"] .bot-body {
-            border-color: var(--color-neon-pink);
-            box-shadow: 0 0 20px rgba(244, 114, 182, 0.3);
-        }
-
-        /* --- ATMOSPHERIC DYNAMIC BACKGROUND --- */
-        @keyframes ambient-breathing {
-
-            0%,
-            100% {
-                opacity: 0.15;
-                transform: translate(0, 0) scale(1);
-            }
-
-            33% {
-                opacity: 0.25;
-                transform: translate(2%, 2%) scale(1.1);
-            }
-
-            66% {
-                opacity: 0.2;
-                transform: translate(-1%, 3%) scale(0.95);
-            }
-        }
-
-        .dynamic-bg-surface {
-            position: fixed;
-            inset: 0;
-            z-index: -20;
-            background: var(--bg-dark);
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .ambient-light {
-            position: absolute;
-            width: 80vw;
-            height: 80vh;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.15;
-            will-change: transform, opacity;
-            animation: ambient-breathing 15s ease-in-out infinite;
-        }
-
-        .light-left {
-            top: -10%;
-            left: -20%;
-            background: radial-gradient(circle, var(--color-primary), transparent 70%);
-        }
-
-        .light-right {
-            bottom: -10%;
-            right: -20%;
-            animation-delay: -5s;
-            background: radial-gradient(circle, var(--color-neon-pink), transparent 70%);
-            opacity: 0.12;
-        }
-    </style>
 </head>
 
 <body
     class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden">
+
+    <!-- [ATMOSPHERE] SVG Sprites -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;" aria-hidden="true">
+        <symbol id="diar-logo" viewBox="0 0 200 200">
+            <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold"
+                class="bot-logo-accent">{</text>
+            <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
+                class="bot-logo-main">D</text>
+            <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
+                class="bot-logo-accent">R</text>
+            <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold"
+                class="bot-logo-main">;</text>
+        </symbol>
+        <symbol id="diar-logo-colored" viewBox="0 0 200 200">
+            <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold" fill="#FBBF24">{</text>
+            <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="#FFFFFF">D</text>
+            <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="#FBBF24">R</text>
+            <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold" fill="#FFFFFF">;</text>
+        </symbol>
+    </svg>
 
     <!-- [ATMOSPHERE] Dynamic Ambient Lighting -->
     <div class="dynamic-bg-surface" aria-hidden="true">
@@ -484,8 +143,7 @@
     </div>
 
     <!-- [INTRO] Optimized Decorative View -->
-    <section id="intro"
-        class="h-screen w-full flex items-center justify-center bg-[#0b0b0b] px-6 text-center intro-animate"
+    <section id="intro" class="h-screen w-full flex items-center justify-center bg-void px-6 text-center intro-animate"
         aria-hidden="true" aria-label="Pantalla de carga decorativa">
         <div
             class="text-white text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none max-w-5xl hero-breathing">
@@ -498,13 +156,9 @@
         class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <a href="/" class="flex items-center gap-2 group" aria-label="Diar Studio Home">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
-                    class="w-9 h-9 text-primary fill-current transition-transform duration-500 group-hover:rotate-3"
+                <svg class="w-9 h-9 text-primary fill-current transition-transform duration-500 group-hover:rotate-3"
                     role="img" aria-hidden="true">
-                    <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold">{</text>
-                    <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold">D</text>
-                    <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold">R</text>
-                    <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold">;</text>
+                    <use href="#diar-logo"></use>
                 </svg>
                 <span class="text-lg font-black tracking-tighter uppercase">Diar Studio</span>
             </a>
@@ -517,7 +171,7 @@
                     href="contact.html">Contacto</a>
             </nav>
             <a href="contact.html"
-                class="hidden sm:inline-flex items-center justify-center bg-[#f5f7f8] text-[#0b0b0b] px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group"
+                class="hidden sm:inline-flex items-center justify-center bg-background-light text-void px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group"
                 aria-label="Initialize a new engineering project with Diar Studio">
                 Iniciar Proyecto
                 <span class="ml-2 font-mono transition-transform duration-300 group-hover:translate-x-1"
@@ -548,7 +202,7 @@
                     </p>
                     <div class="flex flex-wrap gap-4 pt-4">
                         <a href="contact.html"
-                            class="inline-flex items-center justify-center bg-[#f5f7f8] text-[#0b0b0b] px-8 py-4 text-sm font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(59,131,247,0.35)] active:scale-95 group"
+                            class="inline-flex items-center justify-center bg-background-light text-void px-8 py-4 text-sm font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(59,131,247,0.35)] active:scale-95 group"
                             aria-label="Initialize a new engineering project with Diar Studio">
                             Iniciar Proyecto
                             <span
@@ -564,7 +218,7 @@
                 <div class="lg:col-span-5 relative">
                     <article
                         class="aspect-square bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden relative group">
-                        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent z-10 opacity-50"
+                        <div class="absolute inset-0 bg-linear-to-br from-primary/20 to-transparent z-10 opacity-50"
                             aria-hidden="true"></div>
                         <picture>
                             <!-- Adaptive High-Compression AVIF -->
@@ -712,19 +366,11 @@
     </main>
 
     <!-- [FOOTER] Optimized -->
-    <footer class="border-t border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark py-12"
-        loading="lazy">
+    <footer class="border-t border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark py-12">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="flex items-center gap-3">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
-                    <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold"
-                        fill="#FBBF24">{</text>
-                    <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
-                        fill="#FFFFFF">D</text>
-                    <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
-                        fill="#FBBF24">R</text>
-                    <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold"
-                        fill="#FFFFFF">;</text>
+                <svg class="w-10 h-10" role="img" aria-label="Diar Studio Logo">
+                    <use href="#diar-logo-colored"></use>
                 </svg>
                 <span class="text-sm font-black tracking-tighter uppercase">Diar Studio © 2026</span>
             </div>
@@ -755,47 +401,28 @@
         </div>
     </footer>
 
-    <div id="audit-bot" class="fixed right-6 z-[99] pointer-events-none transition-all duration-1000"
+    <div id="audit-bot" class="fixed right-6 z-99 pointer-events-none transition-all duration-1000"
         style="top: 20%; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); will-change: top, transform, right;"
         data-state="idle" aria-hidden="true">
         <div class="bot-levitate">
             <div
-                class="bot-body size-12 border border-primary bg-slate-900/80 rounded-full flex items-center justify-center backdrop-blur-sm relative shadow-2xl p-1.5 transition-colors duration-500">
+                class="bot-body size-12 border border-primary bg-slate-900 rounded-full flex items-center justify-center backdrop-blur-sm relative shadow-2xl p-1.5 transition-all duration-500">
                 <svg class="w-full h-full opacity-90" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold" fill="#FBBF24"
-                        class="bot-eye-fill transition-colors duration-500">{</text>
+                    <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold"
+                        class="bot-logo-accent transition-colors duration-500">{</text>
                     <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
-                        fill="#FFFFFF">D</text>
-                    <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="#FBBF24"
-                        class="bot-eye-fill transition-colors duration-500">R</text>
+                        class="bot-logo-main transition-colors duration-500">D</text>
+                    <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
+                        class="bot-logo-accent transition-colors duration-500">R</text>
                     <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold"
-                        fill="#FFFFFF">;</text>
+                        class="bot-logo-main transition-colors duration-500">;</text>
                 </svg>
             </div>
         </div>
     </div>
 
     <!-- [SCRIPTS] Performance Hardening -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#3b83f7",
-                        "background-light": "#f5f7f8",
-                        "background-dark": "#101722",
-                        "platinum": "#f5f7f8",
-                        "void": "#0b0b0b"
-                    },
-                    fontFamily: { "display": ["Geist", "sans-serif"] },
-                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "full": "0.75rem" }
-                }
-            }
-        };
-
-        // Performance-Engineered Assistant (Intersection Observer API)
+    <script>
         const initAuditBot = () => {
             const bot = document.getElementById('audit-bot');
             const sections = ['hero', 'work', 'contact'].map(id => document.getElementById(id));

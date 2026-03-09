@@ -154,7 +154,7 @@
     <!-- Pre-rendered PDF Container (Kept in layout but invisible to avoid capture issues) -->
     <div id="pdf-container" style="visibility: hidden; position: absolute; top: 0; left: -9999px; z-index: -100;"></div>
 
-    <div id="audit-bot" class="fixed left-6 z-[99] pointer-events-none transition-all duration-1000"
+    <div id="audit-bot" class="fixed left-6 z-99 pointer-events-none transition-all duration-1000"
         style="top: 30%; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); will-change: top, transform, left;"
         data-state="idle" aria-hidden="true">
         <div class="bot-levitate relative">
@@ -202,7 +202,7 @@
                     href="contact.html">Contacto</a>
             </nav>
             <a href="contact.html"
-                class="hidden sm:inline-flex items-center justify-center bg-[#f5f7f8] text-[#0b0b0b] px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group">
+                class="hidden sm:inline-flex items-center justify-center bg-background-light text-void px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group">
                 Iniciar Proyecto
                 <span class="ml-2 font-mono transition-transform duration-300 group-hover:translate-x-1"
                     aria-hidden="true">_</span>
@@ -239,7 +239,7 @@
                     </h3>
                     <div class="grid gap-4">
                         <label
-                            class="group relative flex items-center justify-between p-6 rounded-sm glass-card cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:shadow-[0_0_30px_rgba(59,131,247,0.15)] transition-all duration-300">
+                            class="group relative flex items-center justify-between p-6 rounded-sm glass-card cursor-pointer has-checked:border-primary has-checked:bg-primary/5 has-checked:shadow-[0_0_30px_rgba(59,131,247,0.15)] transition-all duration-300">
                             <input type="radio" name="architecture" value="1200" class="sr-only peer" checked>
                             <div class="flex flex-col gap-1">
                                 <span
@@ -251,15 +251,15 @@
                             <div class="flex items-center gap-6">
                                 <span class="text-xs font-mono text-primary font-bold">$1,200.00</span>
                                 <div
-                                    class="size-5 rounded-full border-2 border-slate-700 group-has-[:checked]:border-primary group-has-[:checked]:bg-primary transition-all shadow-[0_0_10px_transparent] group-has-[:checked]:shadow-blue-500/50 flex items-center justify-center">
+                                    class="size-5 rounded-full border-2 border-slate-700 group-has-checked:border-primary group-has-checked:bg-primary transition-all shadow-[0_0_10px_transparent] group-has-checked:shadow-blue-500/50 flex items-center justify-center">
                                     <div
-                                        class="size-1.5 bg-white rounded-full opacity-0 group-has-[:checked]:opacity-100 transition-opacity">
+                                        class="size-1.5 bg-white rounded-full opacity-0 group-has-checked:opacity-100 transition-opacity">
                                     </div>
                                 </div>
                             </div>
                         </label>
                         <label
-                            class="group relative flex items-center justify-between p-6 rounded-sm glass-card cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:shadow-[0_0_30px_rgba(59,131,247,0.15)] transition-all duration-300">
+                            class="group relative flex items-center justify-between p-6 rounded-sm glass-card cursor-pointer has-checked:border-primary has-checked:bg-primary/5 has-checked:shadow-[0_0_30px_rgba(59,131,247,0.15)] transition-all duration-300">
                             <input type="radio" name="architecture" value="4500" class="sr-only peer">
                             <div class="flex flex-col gap-1">
                                 <span
@@ -271,15 +271,15 @@
                             <div class="flex items-center gap-6">
                                 <span class="text-xs font-mono text-primary font-bold">$4,500.00</span>
                                 <div
-                                    class="size-5 rounded-full border-2 border-slate-700 group-has-[:checked]:border-primary group-has-[:checked]:bg-primary transition-all shadow-[0_0_10px_transparent] group-has-[:checked]:shadow-blue-500/50 flex items-center justify-center">
+                                    class="size-5 rounded-full border-2 border-slate-700 group-has-checked:border-primary group-has-checked:bg-primary transition-all shadow-[0_0_10px_transparent] group-has-checked:shadow-blue-500/50 flex items-center justify-center">
                                     <div
-                                        class="size-1.5 bg-white rounded-full opacity-0 group-has-[:checked]:opacity-100 transition-opacity">
+                                        class="size-1.5 bg-white rounded-full opacity-0 group-has-checked:opacity-100 transition-opacity">
                                     </div>
                                 </div>
                             </div>
                         </label>
                         <label
-                            class="group relative flex items-center justify-between p-6 rounded-sm glass-card cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:shadow-[0_0_30px_rgba(59,131,247,0.15)] transition-all duration-300">
+                            class="group relative flex items-center justify-between p-6 rounded-sm glass-card cursor-pointer has-checked:border-primary has-checked:bg-primary/5 has-checked:shadow-[0_0_30px_rgba(59,131,247,0.15)] transition-all duration-300">
                             <input type="radio" name="architecture" value="7000" class="sr-only peer">
                             <div class="flex flex-col gap-1">
                                 <span
@@ -291,9 +291,9 @@
                             <div class="flex items-center gap-6">
                                 <span class="text-xs font-mono text-primary font-bold">$7,000.00</span>
                                 <div
-                                    class="size-5 rounded-full border-2 border-slate-700 group-has-[:checked]:border-primary group-has-[:checked]:bg-primary transition-all shadow-[0_0_10px_transparent] group-has-[:checked]:shadow-blue-500/50 flex items-center justify-center">
+                                    class="size-5 rounded-full border-2 border-slate-700 group-has-checked:border-primary group-has-checked:bg-primary transition-all shadow-[0_0_10px_transparent] group-has-checked:shadow-blue-500/50 flex items-center justify-center">
                                     <div
-                                        class="size-1.5 bg-white rounded-full opacity-0 group-has-[:checked]:opacity-100 transition-opacity">
+                                        class="size-1.5 bg-white rounded-full opacity-0 group-has-checked:opacity-100 transition-opacity">
                                     </div>
                                 </div>
                             </div>
@@ -309,7 +309,7 @@
                     </h3>
                     <div class="grid sm:grid-cols-2 gap-4">
                         <label
-                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-checked:border-primary has-checked:bg-primary/5 transition-all duration-300">
                             <div class="flex items-center gap-4">
                                 <input type="checkbox" name="addon" value="800"
                                     class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
@@ -321,7 +321,7 @@
                                 class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$800</span>
                         </label>
                         <label
-                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-checked:border-primary has-checked:bg-primary/5 transition-all duration-300">
                             <div class="flex items-center gap-4">
                                 <input type="checkbox" name="addon" value="600"
                                     class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
@@ -333,7 +333,7 @@
                                 class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$600</span>
                         </label>
                         <label
-                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-checked:border-primary has-checked:bg-primary/5 transition-all duration-300">
                             <div class="flex items-center gap-4">
                                 <input type="checkbox" name="addon" value="1500"
                                     class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
@@ -345,7 +345,7 @@
                                 class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$1,500</span>
                         </label>
                         <label
-                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-checked:border-primary has-checked:bg-primary/5 transition-all duration-300">
                             <div class="flex items-center gap-4">
                                 <input type="checkbox" name="addon" value="950"
                                     class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
@@ -357,7 +357,7 @@
                                 class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$950</span>
                         </label>
                         <label
-                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-checked:border-primary has-checked:bg-primary/5 transition-all duration-300">
                             <div class="flex items-center gap-4">
                                 <input type="checkbox" name="addon" value="1200"
                                     class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
@@ -369,7 +369,7 @@
                                 class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$1,200</span>
                         </label>
                         <label
-                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-checked:border-primary has-checked:bg-primary/5 transition-all duration-300">
                             <div class="flex items-center gap-4">
                                 <input type="checkbox" name="addon" value="500"
                                     class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
@@ -381,7 +381,7 @@
                                 class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$500</span>
                         </label>
                         <label
-                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-checked:border-primary has-checked:bg-primary/5 transition-all duration-300">
                             <div class="flex items-center gap-4">
                                 <input type="checkbox" name="addon" value="2500"
                                     class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
