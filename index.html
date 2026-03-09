@@ -12,7 +12,9 @@
         type="image/svg+xml">
     <meta name="description"
         content="Professional engineering and design for high-authority digital assets. Precise, scalable, and production-ready infrastructure by Diar Studio." />
-    <link rel="canonical" href="https://diarstudio.com/" />
+    <link rel="canonical" href="https://diarstudio.netlify.app/" />
+    <meta name="author" content="ClevesDev | Diar Studio" />
+    <link rel="author" href="https://github.com/ClevesDev" />
 
     <!-- ENTERPRISE SECURITY POLICY -->
     <meta http-equiv="Content-Security-Policy"
@@ -26,8 +28,8 @@
     <meta property="og:title" content="Diar Studio | High-End Engineering" />
     <meta property="og:description"
         content="Engineering revenue-generating infrastructure with technical rigor and aesthetic precision." />
-    <meta property="og:url" content="https://diarstudio.com/" />
-    <meta property="og:image" content="https://diarstudio.com/img/preview-diar.png" />
+    <meta property="og:url" content="https://diarstudio.netlify.app/" />
+    <meta property="og:image" content="https://diarstudio.netlify.app/img/preview-diar.png" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <!-- TECHNICAL STRUCTURED DATA (JSON-LD) -->
@@ -36,14 +38,23 @@
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
       "name": "Diar Studio",
-      "url": "https://diarstudio.com",
-      "logo": "https://diarstudio.com/logo.svg",
-      "image": "https://diarstudio.com/og-image.jpg",
+      "url": "https://diarstudio.netlify.app",
+      "logo": "https://diarstudio.netlify.app/logo.svg",
+      "image": "https://diarstudio.netlify.app/img/preview-diar.png",
       "description": "High-authority engineering and design for digital assets.",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Caracas",
         "addressCountry": "CH"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "ClevesDev",
+        "url": "https://github.com/ClevesDev",
+        "jobTitle": "Lead Engineering & Digital Architect",
+        "sameAs": [
+          "https://github.com/ClevesDev"
+        ]
       },
       "contactPoint": {
         "@type": "ContactPoint",
@@ -75,6 +86,20 @@
       }
     }
   </script>
+
+    <!-- [2026] SPECULATION RULES API (Instant Navigation Engine) -->
+    <script type="speculationrules">
+    {
+      "prerender": [
+        {
+          "source": "list",
+          "urls": ["contact.html"],
+          "where": { "href_matches": "contact.html" },
+          "eagerness": "moderate"
+        }
+      ]
+    }
+    </script>
 
     <!-- ASSETS: FONTS & ICONS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -392,11 +417,71 @@
             border-color: var(--color-neon-pink);
             box-shadow: 0 0 20px rgba(244, 114, 182, 0.3);
         }
+
+        /* --- ATMOSPHERIC DYNAMIC BACKGROUND --- */
+        @keyframes ambient-breathing {
+
+            0%,
+            100% {
+                opacity: 0.15;
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                opacity: 0.25;
+                transform: translate(2%, 2%) scale(1.1);
+            }
+
+            66% {
+                opacity: 0.2;
+                transform: translate(-1%, 3%) scale(0.95);
+            }
+        }
+
+        .dynamic-bg-surface {
+            position: fixed;
+            inset: 0;
+            z-index: -20;
+            background: var(--bg-dark);
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .ambient-light {
+            position: absolute;
+            width: 80vw;
+            height: 80vh;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            will-change: transform, opacity;
+            animation: ambient-breathing 15s ease-in-out infinite;
+        }
+
+        .light-left {
+            top: -10%;
+            left: -20%;
+            background: radial-gradient(circle, var(--color-primary), transparent 70%);
+        }
+
+        .light-right {
+            bottom: -10%;
+            right: -20%;
+            animation-delay: -5s;
+            background: radial-gradient(circle, var(--color-neon-pink), transparent 70%);
+            opacity: 0.12;
+        }
     </style>
 </head>
 
 <body
     class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- [ATMOSPHERE] Dynamic Ambient Lighting -->
+    <div class="dynamic-bg-surface" aria-hidden="true">
+        <div class="ambient-light light-left"></div>
+        <div class="ambient-light light-right"></div>
+    </div>
 
     <!-- [INTRO] Optimized Decorative View -->
     <section id="intro"
@@ -481,9 +566,14 @@
                         class="aspect-square bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden relative group">
                         <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent z-10 opacity-50"
                             aria-hidden="true"></div>
-                        <img class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 transition-transform duration-700 group-hover:scale-105"
-                            alt="Diar Studio Flutter & Dart Engineering Dashboard" src="./img/home_item1.avif"
-                            width="800" height="800" fetchpriority="high" />
+                        <picture>
+                            <!-- Adaptive High-Compression AVIF -->
+                            <source srcset="./img/home_item1.avif" type="image/avif">
+                            <!-- High-performance loading fallback -->
+                            <img class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 transition-transform duration-700 group-hover:scale-105"
+                                alt="Diar Studio Flutter & Dart Engineering Dashboard" src="./img/home_item1.avif"
+                                width="1200" height="800" fetchpriority="high" decoding="async" loading="eager" />
+                        </picture>
                         <div
                             class="absolute top-6 left-6 p-4 bg-background-dark/90 border border-slate-700 backdrop-blur-md rounded shadow-2xl z-20 hidden md:block">
                             <div class="flex items-center gap-3 mb-2">
@@ -625,14 +715,40 @@
     <footer class="border-t border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark py-12"
         loading="lazy">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-3">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
+                    <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold"
+                        fill="#FBBF24">{</text>
+                    <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
+                        fill="#FFFFFF">D</text>
+                    <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
+                        fill="#FBBF24">R</text>
+                    <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold"
+                        fill="#FFFFFF">;</text>
+                </svg>
                 <span class="text-sm font-black tracking-tighter uppercase">Diar Studio © 2026</span>
             </div>
-            <div class="flex gap-8">
-                <a class="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-primary"
-                    href="https://github.com/ClevesDev" rel="noopener noreferrer" target="_blank">GitHub</a>
-                <a class="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-primary" href="#"
-                    rel="noopener noreferrer" target="_blank" id="linkedin-link-index">LinkedIn</a>
+            <div class="flex items-center gap-6">
+                <a class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-all duration-300 group"
+                    href="https://github.com/ClevesDev" rel="noopener noreferrer" target="_blank">
+                    <svg class="w-4 h-4 fill-current transition-transform duration-300 group-hover:scale-110"
+                        viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M64 5.103c-33.347 0-60.388 27.035-60.388 60.388 0 26.682 17.303 49.317 41.297 57.303 3.017.56 4.125-1.31 4.125-2.905 0-1.44-.056-6.197-.082-11.243-16.8 3.653-20.345-7.125-20.345-7.125-2.747-6.98-6.705-8.836-6.705-8.836-5.48-3.748.413-3.67.413-3.67 6.063.425 9.257 6.223 9.257 6.223 5.386 9.23 14.127 6.562 17.573 5.02.542-3.903 2.107-6.568 3.834-8.076-13.413-1.525-27.514-6.704-27.514-29.843 0-6.593 2.36-11.98 6.223-16.21-.628-1.52-2.695-7.662.584-15.98 0 0 5.07-1.623 16.61 6.19C53.7 35 58.867 34.327 64 34.304c5.13.023 10.3.694 15.127 2.033 11.526-7.813 16.59-6.19 16.59-6.19 3.287 8.317 1.22 14.46.593 15.98 3.872 4.23 6.215 9.617 6.215 16.21 0 23.194-14.127 28.3-27.574 29.796 2.167 1.874 4.097 5.55 4.097 11.183 0 8.08-.07 14.583-.07 16.572 0 1.607 1.088 3.49 4.148 2.897 23.98-7.994 41.263-30.622 41.263-57.294C124.388 32.14 97.35 5.104 64 5.104z"
+                            clip-rule="evenodd" fill="currentColor"></path>
+                    </svg>
+                    GitHub
+                </a>
+                <a class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-all duration-300 group"
+                    href="#" rel="noopener noreferrer" target="_blank" id="linkedin-link-index">
+                    <svg class="w-4 h-4 fill-current transition-transform duration-300 group-hover:scale-110"
+                        viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M87.877 5.608H11.174c-3.673 0-6.65 2.886-6.65 6.448v77.101c0 3.562 2.978 6.451 6.65 6.451h76.703c3.673 0 6.646-2.89 6.646-6.451V12.056c0-3.561-2.973-6.448-6.646-6.448zM31.809 80.944H18.211V40.31h13.598v40.634zm-6.798-46.185h-.091c-4.56 0-7.516-3.119-7.516-7.023 0-3.983 3.043-7.017 7.693-7.017 4.651 0 7.512 3.033 7.602 7.017 0 3.905-2.95 7.023-7.688 7.023zm55.816 46.185H67.233v-21.74c0-5.464-1.97-9.191-6.886-9.191-3.761 0-5.993 2.515-6.973 4.942-.364.868-.453 2.08-.453 3.292v22.696H39.329s.178-36.823 0-40.634h13.593v5.761c1.805-2.768 5.029-6.717 12.249-6.717 8.947 0 15.656 5.804 15.656 18.291v23.3zM52.834 46.199c.024-.038.056-.084.088-.128v.128h-.088z"
+                            fill="currentColor"></path>
+                    </svg>
+                    LinkedIn
+                </a>
             </div>
             <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Caracas • Venezuela • Remote
             </div>
