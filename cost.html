@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"
+    style="scroll-snap-type: y proximity !important; scroll-behavior: smooth !important; scroll-padding-top: 5rem;">
+
+<head>
+    <!-- [1] SEO & ARCHITECTURE METADATA -->
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Diar Studio | Presupuesto Técnico & Asset Estimator</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ctext x='30' y='135' font-family='monospace' font-size='120' font-weight='bold' fill='%23FBBF24'%3E%7B%3C/text%3E%3Ctext x='65' y='120' font-family='sans-serif' font-size='80' font-weight='bold' fill='%23FFFFFF'%3ED%3C/text%3E%3Ctext x='100' y='120' font-family='sans-serif' font-size='80' font-weight='bold' fill='%23FBBF24'%3ER%3C/text%3E%3Ctext x='145' y='128' font-family='monospace' font-size='100' font-weight='bold' fill='%23FFFFFF'%3E;%3C/text%3E%3C/svg%3E"
+        type="image/svg+xml">
+    <meta name="description"
+        content="Configurador técnico de activos digitales de alta autoridad. Obtén un presupuesto preciso y escalable para tu infraestructura." />
+
+    <!-- ENTERPRISE SECURITY POLICY -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://lh3.googleusercontent.com data:; connect-src 'self';" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+
+    <!-- ASSETS: FONTS & ICONS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- External PDF Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --color-primary: #3b83f7;
+            --color-neon-pink: #f472b6;
+            --color-platinum: #f5f7f8;
+            --color-void: #0b0b0b;
+            --bg-dark: #101722;
+        }
+
+        body {
+            font-family: 'Geist', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .swiss-grid {
+            background-image: radial-gradient(circle at 2px 2px, rgba(59, 131, 247, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(59, 131, 247, 0.4);
+        }
+
+        .text-gradient-silver {
+            background-image: linear-gradient(120deg, #E2E8F0 0%, #FFFFFF 25%, #94A3B8 50%, #F8FAFC 75%, #475569 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Ambient Lights */
+        .ambient-light {
+            position: fixed;
+            width: 80vw;
+            height: 80vh;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: -10;
+            pointer-events: none;
+        }
+
+        .light-left {
+            top: -20%;
+            left: -20%;
+            background: radial-gradient(circle, var(--color-primary), transparent 70%);
+        }
+
+        .light-right {
+            bottom: -20%;
+            right: -20%;
+            background: radial-gradient(circle, var(--color-neon-pink), transparent 70%);
+        }
+
+        /* --- AUDIT-BOT ASSISTANT --- */
+        @keyframes levitate {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            50% {
+                transform: translate3d(0, -10px, 0);
+            }
+        }
+
+        .bot-levitate {
+            animation: levitate 4s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        .bot-bubble {
+            position: absolute;
+            bottom: 120%;
+            left: 80%;
+            transform: scale(0.8);
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--color-primary);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 800;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .bot-bubble.show {
+            opacity: 1;
+            transform: scale(1);
+            bottom: 130%;
+        }
+
+        @media (max-width: 768px) {
+            #audit-bot {
+                left: 4 !important;
+                bottom: 24px !important;
+                top: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-dark text-slate-100 transition-colors duration-300 swiss-grid min-h-screen overflow-x-hidden">
+
+    <div id="audit-bot" class="fixed left-6 z-[99] pointer-events-none transition-all duration-1000"
+        style="top: 30%; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); will-change: top, transform, left;"
+        data-state="idle" aria-hidden="true">
+        <div class="bot-levitate relative">
+            <div id="bot-message" class="bot-bubble"></div>
+            <div
+                class="bot-body size-12 border border-primary bg-slate-900/80 rounded-full flex items-center justify-center backdrop-blur-sm relative shadow-2xl p-1.5 transition-colors duration-500">
+                <svg class="w-full h-full opacity-90" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold" fill="#FBBF24"
+                        class="bot-eye-fill transition-colors duration-500">{</text>
+                    <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
+                        fill="#FFFFFF">D</text>
+                    <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="#FBBF24"
+                        class="bot-eye-fill transition-colors duration-500">R</text>
+                    <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold"
+                        fill="#FFFFFF">;</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="ambient-light light-left"></div>
+    <div class="ambient-light light-right"></div>
+
+    <!-- [NAVIGATION] Semantic Header (Exact match to index.html) -->
+    <header
+        class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 group" aria-label="Diar Studio Home">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
+                    class="w-9 h-9 text-primary fill-current transition-transform duration-500 group-hover:rotate-3"
+                    role="img" aria-hidden="true">
+                    <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold">{</text>
+                    <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold">D</text>
+                    <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold">R</text>
+                    <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold">;</text>
+                </svg>
+                <span class="text-lg font-black tracking-tighter uppercase">Diar Studio</span>
+            </a>
+            <nav class="hidden md:flex items-center gap-8" aria-label="Principal Navigation">
+                <a class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors"
+                    href="index.html#solutions">Soluciones</a>
+                <a class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors"
+                    href="index.html#work">Capsule</a>
+                <a class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors"
+                    href="contact.html">Contacto</a>
+            </nav>
+            <a href="contact.html"
+                class="hidden sm:inline-flex items-center justify-center bg-[#f5f7f8] text-[#0b0b0b] px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group">
+                Initialize Engineering
+                <span class="ml-2 font-mono transition-transform duration-300 group-hover:translate-x-1"
+                    aria-hidden="true">_</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-12 gap-16">
+        <!-- Left: Configurator -->
+        <div class="lg:col-span-7 space-y-16">
+            <section>
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full mb-6">
+                    <span class="size-2 bg-primary rounded-full animate-pulse"></span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Live Pricing Engine
+                        v4.0</span>
+                </div>
+                <h1
+                    class="text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tighter text-gradient-silver mb-8">
+                    Crea tu <br />Activo Digital.
+                </h1>
+                <p class="max-w-xl text-lg text-slate-400 font-medium leading-relaxed">
+                    Personaliza los componentes técnicos de tu activo. Nuestra lógica de cotización garantiza rigor
+                    técnico y transparencia presupuestaria.
+                </p>
+            </section>
+
+            <!-- Categories -->
+            <div class="space-y-12" id="calculator-form">
+                <!-- 01. Arquitectura -->
+                <div class="space-y-6">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-[0.3em] flex items-center gap-3">
+                        <span class="size-1 bg-primary"></span> 01. Arquitectura Core
+                    </h3>
+                    <div class="grid gap-4">
+                        <label
+                            class="group relative flex items-center justify-between p-6 rounded-sm glass-card cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:shadow-[0_0_30px_rgba(59,131,247,0.15)] transition-all duration-300">
+                            <input type="radio" name="architecture" value="1200" class="sr-only peer" checked>
+                            <div class="flex flex-col gap-1">
+                                <span
+                                    class="text-sm font-black uppercase tracking-tight text-white transition-colors group-hover:text-primary">High-End
+                                    Landing Page</span>
+                                <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Static
+                                    Excellence (Vite/Tailwind 4)</span>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <span class="text-xs font-mono text-primary font-bold">$1,200.00</span>
+                                <div
+                                    class="size-5 rounded-full border-2 border-slate-700 group-has-[:checked]:border-primary group-has-[:checked]:bg-primary transition-all shadow-[0_0_10px_transparent] group-has-[:checked]:shadow-blue-500/50 flex items-center justify-center">
+                                    <div
+                                        class="size-1.5 bg-white rounded-full opacity-0 group-has-[:checked]:opacity-100 transition-opacity">
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                        <label
+                            class="group relative flex items-center justify-between p-6 rounded-sm glass-card cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:shadow-[0_0_30px_rgba(59,131,247,0.15)] transition-all duration-300">
+                            <input type="radio" name="architecture" value="4500" class="sr-only peer">
+                            <div class="flex flex-col gap-1">
+                                <span
+                                    class="text-sm font-black uppercase tracking-tight text-white transition-colors group-hover:text-primary">Full-Stack
+                                    Ecosystem</span>
+                                <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">React /
+                                    Next.js / Node.js Engine</span>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <span class="text-xs font-mono text-primary font-bold">$4,500.00</span>
+                                <div
+                                    class="size-5 rounded-full border-2 border-slate-700 group-has-[:checked]:border-primary group-has-[:checked]:bg-primary transition-all shadow-[0_0_10px_transparent] group-has-[:checked]:shadow-blue-500/50 flex items-center justify-center">
+                                    <div
+                                        class="size-1.5 bg-white rounded-full opacity-0 group-has-[:checked]:opacity-100 transition-opacity">
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                        <label
+                            class="group relative flex items-center justify-between p-6 rounded-sm glass-card cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:shadow-[0_0_30px_rgba(59,131,247,0.15)] transition-all duration-300">
+                            <input type="radio" name="architecture" value="7000" class="sr-only peer">
+                            <div class="flex flex-col gap-1">
+                                <span
+                                    class="text-sm font-black uppercase tracking-tight text-white transition-colors group-hover:text-primary">Native
+                                    Mobile Asset</span>
+                                <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">iOS &
+                                    Android (Flutter/Dart Hybrid)</span>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <span class="text-xs font-mono text-primary font-bold">$7,000.00</span>
+                                <div
+                                    class="size-5 rounded-full border-2 border-slate-700 group-has-[:checked]:border-primary group-has-[:checked]:bg-primary transition-all shadow-[0_0_10px_transparent] group-has-[:checked]:shadow-blue-500/50 flex items-center justify-center">
+                                    <div
+                                        class="size-1.5 bg-white rounded-full opacity-0 group-has-[:checked]:opacity-100 transition-opacity">
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 02. Mejoras -->
+                <div class="space-y-6">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-[0.3em] flex items-center gap-3">
+                        <span class="size-1 bg-neon-pink" style="background-color: #f472b6;"></span> 02. Add-ons
+                        Técnicos
+                    </h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <label
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            <div class="flex items-center gap-4">
+                                <input type="checkbox" name="addon" value="800"
+                                    class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
+                                <span
+                                    class="text-[11px] font-black uppercase text-slate-400 peer-checked:text-white transition-colors">Cloud
+                                    Infra (AWS)</span>
+                            </div>
+                            <span
+                                class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$800</span>
+                        </label>
+                        <label
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            <div class="flex items-center gap-4">
+                                <input type="checkbox" name="addon" value="600"
+                                    class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
+                                <span
+                                    class="text-[11px] font-black uppercase text-slate-400 peer-checked:text-white transition-colors">SEO
+                                    Authority Kit</span>
+                            </div>
+                            <span
+                                class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$600</span>
+                        </label>
+                        <label
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            <div class="flex items-center gap-4">
+                                <input type="checkbox" name="addon" value="1500"
+                                    class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
+                                <span
+                                    class="text-[11px] font-black uppercase text-slate-400 peer-checked:text-white transition-colors">QA
+                                    & Automated Testing</span>
+                            </div>
+                            <span
+                                class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$1,500</span>
+                        </label>
+                        <label
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            <div class="flex items-center gap-4">
+                                <input type="checkbox" name="addon" value="950"
+                                    class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
+                                <span
+                                    class="text-[11px] font-black uppercase text-slate-400 peer-checked:text-white transition-colors">Advanced
+                                    CI/CD Pipeline</span>
+                            </div>
+                            <span
+                                class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$950</span>
+                        </label>
+                        <label
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            <div class="flex items-center gap-4">
+                                <input type="checkbox" name="addon" value="1200"
+                                    class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
+                                <span
+                                    class="text-[11px] font-black uppercase text-slate-400 peer-checked:text-white transition-colors">Custom
+                                    CMS Integration</span>
+                            </div>
+                            <span
+                                class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$1,200</span>
+                        </label>
+                        <label
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            <div class="flex items-center gap-4">
+                                <input type="checkbox" name="addon" value="500"
+                                    class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
+                                <span
+                                    class="text-[11px] font-black uppercase text-slate-400 peer-checked:text-white transition-colors">Multi-language
+                                    (i18n)</span>
+                            </div>
+                            <span
+                                class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$500</span>
+                        </label>
+                        <label
+                            class="flex items-center justify-between p-5 glass-card rounded-sm cursor-pointer group has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all duration-300">
+                            <div class="flex items-center gap-4">
+                                <input type="checkbox" name="addon" value="2500"
+                                    class="rounded-sm bg-transparent border-slate-700 text-primary focus:ring-primary size-4 peer">
+                                <span
+                                    class="text-[11px] font-black uppercase text-slate-400 peer-checked:text-white transition-colors">Priority
+                                    Support 24/7 (1 Year)</span>
+                            </div>
+                            <span
+                                class="text-[10px] font-mono text-slate-600 group-hover:text-primary transition-colors">+$2,500</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 03. Velocidad -->
+                <div class="space-y-6">
+                    <div class="glass-card p-8 rounded-sm">
+                        <div class="flex justify-between items-center mb-8">
+                            <div>
+                                <span
+                                    class="text-xs font-black uppercase tracking-widest text-slate-300 block mb-1">Velocidad
+                                    de Ejecución</span>
+                                <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Ajuste de
+                                    despliegue crítico</span>
+                            </div>
+                            <span id="rush-label" class="text-lg font-black text-primary uppercase">Estándar
+                                (1.0x)</span>
+                        </div>
+                        <input type="range" id="rush-multiplier" min="1" max="2" step="0.5" value="1"
+                            class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Terminal -->
+        <div class="lg:col-span-5 flex flex-col gap-8 lg:sticky lg:top-24 h-fit">
+            <div class="bg-black rounded-sm border border-slate-800 overflow-hidden shadow-2xl relative">
+                <div class="absolute inset-0 bg-primary/5 pointer-events-none"></div>
+                <div
+                    class="bg-slate-900/80 px-4 py-4 flex items-center justify-between border-b border-white/5 backdrop-blur-sm">
+                    <div class="flex gap-2">
+                        <div class="size-2 rounded-full bg-red-500/40"></div>
+                        <div class="size-2 rounded-full bg-yellow-500/40"></div>
+                        <div class="size-2 rounded-full bg-green-500/40"></div>
+                    </div>
+                    <span
+                        class="text-[9px] font-mono text-slate-500 uppercase tracking-[0.3em] font-bold">Kernel://Project_Estimate</span>
+                </div>
+                <div class="p-10 space-y-10 font-mono relative z-10">
+                    <div>
+                        <span
+                            class="text-[10px] text-primary uppercase font-bold tracking-[0.2em] block mb-2">Presupuesto_Estimado</span>
+                        <div class="text-6xl font-black text-white tracking-tighter" id="total-display">
+                            $1,200<span class="text-slate-500 text-2xl">.00</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 pt-8 border-t border-white/10">
+                        <div id="pre-invoice-list" class="space-y-3 mb-6">
+                            <!-- Dynamically populated selected items -->
+                        </div>
+                        <div
+                            class="flex justify-between text-[10px] uppercase font-bold tracking-widest pt-4 border-t border-white/5">
+                            <span class="text-slate-500">Módulo_Core</span>
+                            <span id="base-price-display" class="text-white">$1,200.00</span>
+                        </div>
+                        <div class="flex justify-between text-[10px] uppercase font-bold tracking-widest">
+                            <span class="text-slate-500">Addons_Técnicos</span>
+                            <span id="addons-price-display" class="text-white">$0.00</span>
+                        </div>
+                        <div class="flex justify-between text-[10px] uppercase font-bold tracking-widest">
+                            <span class="text-slate-500">Coef_Velocidad</span>
+                            <span id="multiplier-display" class="text-white">1.0x</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="flex flex-col gap-4">
+                <button
+                    class="w-full bg-slate-100 text-black py-5 rounded-sm font-black text-xs uppercase tracking-[0.2em] transition-all hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] active:scale-95 group">
+                    Iniciar Alianza
+                    <span
+                        class="ml-2 font-mono transition-transform duration-300 group-hover:translate-x-1 inline-block">_</span>
+                </button>
+                <button id="download-pdf"
+                    class="w-full border border-slate-700 text-slate-400 py-5 rounded-sm font-black text-xs uppercase tracking-[0.2em] hover:bg-white/5 hover:text-white transition-all flex items-center justify-center gap-3 active:scale-95">
+                    Generar Propuesta Técnica
+                    <span class="material-symbols-outlined text-sm">download</span>
+                </button>
+            </div>
+
+            <p
+                class="text-[9px] text-slate-500 uppercase text-center font-bold tracking-[0.2em] leading-relaxed opacity-50">
+                Los precios mostrados son estimaciones técnicas preliminares sujetas a auditoría final por el equipo de
+                ingeniería.
+            </p>
+        </div>
+    </main>
+
+    <!-- [FOOTER] Optimized -->
+    <footer class="border-t border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark py-12">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-3">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
+                    <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold"
+                        fill="#FBBF24">{</text>
+                    <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
+                        fill="#FFFFFF">D</text>
+                    <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
+                        fill="#FBBF24">R</text>
+                    <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold"
+                        fill="#FFFFFF">;</text>
+                </svg>
+                <span class="text-sm font-black tracking-tighter uppercase">Diar Studio © 2026</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-all duration-300 group"
+                    href="https://github.com/ClevesDev" rel="noopener noreferrer" target="_blank">
+                    <svg class="w-4 h-4 fill-current transition-transform duration-300 group-hover:scale-110"
+                        viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M64 5.103c-33.347 0-60.388 27.035-60.388 60.388 0 26.682 17.303 49.317 41.297 57.303 3.017.56 4.125-1.31 4.125-2.905 0-1.44-.056-6.197-.082-11.243-16.8 3.653-20.345-7.125-20.345-7.125-2.747-6.98-6.705-8.836-6.705-8.836-5.48-3.748.413-3.67.413-3.67 6.063.425 9.257 6.223 9.257 6.223 5.386 9.23 14.127 6.562 17.573 5.02.542-3.903 2.107-6.568 3.834-8.076-13.413-1.525-27.514-6.704-27.514-29.843 0-6.593 2.36-11.98 6.223-16.21-.628-1.52-2.695-7.662.584-15.98 0 0 5.07-1.623 16.61 6.19C53.7 35 58.867 34.327 64 34.304c5.13.023 10.3.694 15.127 2.033 11.526-7.813 16.59-6.19 16.59-6.19 3.287 8.317 1.22 14.46.593 15.98 3.872 4.23 6.215 9.617 6.215 16.21 0 23.194-14.127 28.3-27.574 29.796 2.167 1.874 4.097 5.55 4.097 11.183 0 8.08-.07 14.583-.07 16.572 0 1.607 1.088 3.49 4.148 2.897 23.98-7.994 41.263-30.622 41.263-57.294C124.388 32.14 97.35 5.104 64 5.104z"
+                            clip-rule="evenodd" fill="currentColor"></path>
+                    </svg>
+                    GitHub
+                </a>
+                <a class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-all duration-300 group"
+                    href="#" rel="noopener noreferrer" target="_blank">
+                    <svg class="w-4 h-4 fill-current transition-transform duration-300 group-hover:scale-110"
+                        viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M87.877 5.608H11.174c-3.673 0-6.65 2.886-6.65 6.448v77.101c0 3.562 2.978 6.451 6.65 6.451h76.703c3.673 0 6.646-2.89 6.646-6.451V12.056c0-3.561-2.973-6.448-6.646-6.448zM31.809 80.944H18.211V40.31h13.598v40.634zm-6.798-46.185h-.091c-4.56 0-7.516-3.119-7.516-7.023 0-3.983 3.043-7.017 7.693-7.017 4.651 0 7.512 3.033 7.602 7.017 0 3.905-2.95 7.023-7.688 7.023zm55.816 46.185H67.233v-21.74c0-5.464-1.97-9.191-6.886-9.191-3.761 0-5.993 2.515-6.973 4.942-.364.868-.453 2.08-.453 3.292v22.696H39.329s.178-36.823 0-40.634h13.593v5.761c1.805-2.768 5.029-6.717 12.249-6.717 8.947 0 15.656 5.804 15.656 18.291v23.3zM52.834 46.199c.024-.038.056-.084.088-.128v.128h-.088z"
+                            fill="currentColor"></path>
+                    </svg>
+                    LinkedIn
+                </a>
+            </div>
+            <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Caracas • Venezuela • Remote
+            </div>
+        </div>
+    </footer>
+
+    <div id="pdf-container" style="display: none; position: absolute; left: -9999px;"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3b83f7",
+                        "background-dark": "#101722",
+                        "background-light": "#f5f7f8"
+                    },
+                    fontFamily: { "display": ["Geist", "sans-serif"] },
+                    borderRadius: { "DEFAULT": "0.125rem" }
+                }
+            }
+        };
+
+        // PDF Template Sync Logic
+        const syncPDF = () => {
+            const container = document.getElementById('pdf-container');
+            if (!container.innerHTML) return;
+
+            const baseInput = document.querySelector('input[name="architecture"]:checked');
+            const baseValue = parseInt(baseInput.value);
+            const baseName = baseInput.closest('label').querySelector('span').textContent;
+
+            const addonInputs = Array.from(document.querySelectorAll('input[name="addon"]:checked'));
+            const addonsTotal = addonInputs.reduce((total, el) => total + parseInt(el.value), 0);
+            const multiplier = parseFloat(document.getElementById('rush-multiplier').value);
+            const total = (baseValue + addonsTotal) * multiplier;
+
+            // Update PDF Fields
+            const pdfArchName = container.querySelector('#pdf-arch-name');
+            const pdfArchCost = container.querySelector('#pdf-arch-cost');
+            const pdfTotal = container.querySelector('#pdf-total');
+            const pdfVelocity = container.querySelector('#pdf-velocity');
+            const pdfAddonsContainer = container.querySelector('#pdf-addons-container');
+
+            if (pdfArchName) pdfArchName.textContent = baseName;
+            if (pdfArchCost) pdfArchCost.textContent = `$${baseValue.toLocaleString()}.00`;
+            if (pdfTotal) pdfTotal.textContent = `$${total.toLocaleString()}.00`;
+            if (pdfVelocity) pdfVelocity.textContent = `${multiplier.toFixed(1)}x`;
+
+            if (pdfAddonsContainer) {
+                pdfAddonsContainer.innerHTML = addonInputs.map(el => `
+                    <div class="flex items-center py-4 border-b border-slate-100">
+                        <div class="w-12 mono-tech text-slate-300 font-bold">+</div>
+                        <div class="flex-grow">
+                            <h3 class="text-[11px] font-bold uppercase text-slate-600">${el.closest('label').querySelector('span').textContent}</h3>
+                        </div>
+                        <div class="w-32 mono-tech text-right font-bold text-slate-600">+$${parseInt(el.value).toLocaleString()}.00</div>
+                    </div>
+                `).join('');
+            }
+        };
+
+        const showBotMessage = (text) => {
+            const bubble = document.getElementById('bot-message');
+            bubble.textContent = text;
+            bubble.classList.add('show');
+
+            if (window.botTimeout) clearTimeout(window.botTimeout);
+            window.botTimeout = setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+        };
+
+        const messagesPositive = [
+            "Excelente decisión",
+            "Arquitectura validada",
+            "Infrasctructura optimizada",
+            "Precisión técnica detectada",
+            "Escalabilidad confirmada",
+            "Ajuste profesional",
+            "Integridad de datos OK"
+        ];
+
+        const messagesNegative = [
+            "Optimizando presupuesto...",
+            "Simplificando módulos",
+            "Reduciendo complejidad técnica",
+            "Ajuste de recursos detectado",
+            "Re-evaluando escalabilidad",
+            "Menos es más, a veces."
+        ];
+
+        let lastAddonCount = 0;
+
+        const updatePrice = (e) => {
+            const baseInput = document.querySelector('input[name="architecture"]:checked');
+            const addonInputs = Array.from(document.querySelectorAll('input[name="addon"]:checked'));
+            const currentAddonCount = addonInputs.length;
+
+            const baseValue = parseInt(baseInput.value);
+            const baseName = baseInput.closest('label').querySelector('span').textContent;
+            const addonsAmt = addonInputs.reduce((total, el) => total + parseInt(el.value), 0);
+            const multiplier = parseFloat(document.getElementById('rush-multiplier').value);
+
+            const total = (baseValue + addonsAmt) * multiplier;
+
+            if (e && (e.type === 'change' || e.type === 'input')) {
+                if (total >= 10000) {
+                    showBotMessage("!ALELLUYA HABEMUS PRESUPUESTO!");
+                } else if (e.target.name === 'addon' && currentAddonCount < lastAddonCount) {
+                    const randomMsg = messagesNegative[Math.floor(Math.random() * messagesNegative.length)];
+                    showBotMessage(randomMsg);
+                } else {
+                    const randomMsg = messagesPositive[Math.floor(Math.random() * messagesPositive.length)];
+                    showBotMessage(randomMsg);
+                }
+            }
+            lastAddonCount = currentAddonCount;
+
+            // Update Main Displays
+            document.getElementById('total-display').innerHTML = `$${total.toLocaleString()}<span class="text-slate-500 text-2xl">.00</span>`;
+            document.getElementById('base-price-display').textContent = `$${baseValue.toLocaleString()}.00`;
+            document.getElementById('addons-price-display').textContent = `$${addonsAmt.toLocaleString()}.00`;
+            document.getElementById('multiplier-display').textContent = `${multiplier.toFixed(1)}x`;
+
+            const rushLabels = { "1": "Estándar (1.0x)", "1.5": "Acelerado (1.5x)", "2": "Despliegue Rush (2.0x)" };
+            document.getElementById('rush-label').textContent = rushLabels[multiplier.toString()] || `${multiplier.toFixed(1)}x`;
+
+            // Update Pre-Invoice List in Terminal
+            const invoiceList = document.getElementById('pre-invoice-list');
+            let invoiceHTML = `
+                <div class="flex justify-between text-[9px] text-primary/80 uppercase font-mono tracking-tighter">
+                    <span>> ${baseName}</span>
+                    <span>$${baseValue.toLocaleString()}.00</span>
+                </div>
+            `;
+
+            addonInputs.forEach(input => {
+                const name = input.closest('label').querySelector('span').textContent;
+                const value = parseInt(input.value);
+                invoiceHTML += `
+                    <div class="flex justify-between text-[9px] text-slate-400 uppercase font-mono tracking-tighter">
+                        <span>+ ${name}</span>
+                        <span>$${value.toLocaleString()}.00</span>
+                    </div>
+                `;
+            });
+
+            if (multiplier > 1) {
+                invoiceHTML += `
+                    <div class="flex justify-between text-[9px] text-neon-pink/80 uppercase font-mono tracking-tighter">
+                        <span>* COEF_VELOCIDAD (${multiplier.toFixed(1)}x)</span>
+                        <span>AJUSTADO</span>
+                    </div>
+                `;
+            }
+
+            invoiceList.innerHTML = invoiceHTML;
+
+            syncPDF();
+        };
+
+        // Load External PDF Template
+        fetch('template_pdf.html')
+            .then(response => response.text())
+            .then(html => {
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                const content = doc.querySelector('body').innerHTML;
+                document.getElementById('pdf-container').innerHTML = content;
+                updatePrice(); // Initial sync
+            });
+
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('change', updatePrice);
+            input.addEventListener('input', updatePrice);
+        });
+
+        document.getElementById('download-pdf').addEventListener('click', () => {
+            const btn = document.getElementById('download-pdf');
+            if (btn.disabled) return;
+
+            showBotMessage("Hoy se come 😂");
+
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span>Procesando Datos...</span>';
+            btn.style.opacity = '0.7';
+            btn.disabled = true;
+            btn.classList.add('cursor-not-allowed');
+
+            // Simulate loading steps for 4 seconds
+            let step = 0;
+            const steps = [
+                "Compilando Módulos...",
+                "Calculando Costos...",
+                "Inyectando Datos PDF...",
+                "Finalizando Propuesta..."
+            ];
+
+            const interval = setInterval(() => {
+                if (step < steps.length) {
+                    btn.innerHTML = `<span class="flex items-center gap-2"><span class="size-2 bg-primary rounded-full animate-pulse blur-[1px]"></span> ${steps[step]}</span>`;
+                    step++;
+                }
+            }, 800);
+
+            setTimeout(() => {
+                clearInterval(interval);
+                btn.innerHTML = `<span class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">check_circle</span> Iniciando Descarga</span>`;
+
+                const element = document.getElementById('pdf-content'); // This ID is inside the template
+
+                const opt = {
+                    margin: 0,
+                    filename: 'DiarStudio_Technical_Proposal.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, backgroundColor: '#f8fafc', useCORS: true, allowTaint: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                // Temporarily show container off-screen
+                const container = document.getElementById('pdf-container');
+                container.style.display = 'block';
+
+                html2pdf().set(opt).from(element).save().then(() => {
+                    container.style.display = 'none';
+                    btn.innerHTML = originalText;
+                    btn.style.opacity = '1';
+                    btn.disabled = false;
+                    btn.classList.remove('cursor-not-allowed');
+
+                    // Mensaje de cierre del bot
+                    setTimeout(() => {
+                        showBotMessage("Documento listo, te espero para discutir los detalles🚀");
+                    }, 500);
+                });
+            }, 4000);
+        });
+
+        updatePrice();
+    </script>
+</body>
+
+</html>
