@@ -55,9 +55,24 @@
         rel="stylesheet" />
 
     <link rel="stylesheet" href="./css/style.css" />
+
+    <!-- PRE-RENDER THEME ENGINE (Prevent Flash) -->
+    <script>
+        if (localStorage.getItem('theme') === 'light') document.documentElement.classList.remove('dark');
+    </script>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+
+    <!-- [ATMOSPHERE] SVG Sprites (Logo Architecture) -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;" aria-hidden="true">
+        <symbol id="diar-logo" viewBox="0 0 200 200">
+            <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold" fill="currentColor">{</text>
+            <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="currentColor">D</text>
+            <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="currentColor">R</text>
+            <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold" fill="currentColor">;</text>
+        </symbol>
+    </svg>
 
     <!-- [ATMOSPHERE] Dynamic Ambient Lighting -->
     <div class="dynamic-bg-surface" aria-hidden="true">
@@ -70,13 +85,9 @@
             class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-6 md:px-10 py-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
             <div class="flex items-center gap-3">
                 <a href="index.html" class="flex items-center gap-2 group" aria-label="Return to Diar Studio Home">
-                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
-                        class="w-9 h-9 text-primary fill-current transition-transform duration-500 group-hover:-translate-x-1"
+                    <svg class="w-9 h-9 text-primary fill-current transition-transform duration-500 group-hover:-translate-x-1"
                         role="img" aria-hidden="true">
-                        <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold">{</text>
-                        <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold">D</text>
-                        <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold">R</text>
-                        <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold">;</text>
+                        <use href="#diar-logo"></use>
                     </svg>
                     <h2
                         class="text-slate-900 dark:text-white text-xl font-black leading-tight tracking-tighter uppercase">
@@ -91,6 +102,13 @@
                         href="index.html#work">Capsule</a>
                     <a class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors"
                         href="index.html#contact">Contacto</a>
+                    <!-- Theme Switcher -->
+                    <button id="theme-toggle"
+                        class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
+                        aria-label="Toggle Theme Mode">
+                        <span class="ui-sun-icon material-symbols-outlined text-[20px] text-amber-500 hidden">light_mode</span>
+                        <span class="ui-moon-icon material-symbols-outlined text-[20px] text-slate-400">dark_mode</span>
+                    </button>
                 </nav>
                 <a href="index.html"
                     class="flex min-w-[120px] cursor-pointer items-center justify-center bg-background-light text-void px-5 py-2 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group">
@@ -208,8 +226,11 @@
                         <span class="material-symbols-outlined text-9xl">architecture</span>
                     </div>
                     <form class="space-y-6 relative z-10" name="contact" method="POST" data-netlify="true"
-                        action="/thanks">
+                        action="/thanks" data-netlify-honeypot="bot-field">
                         <input type="hidden" name="form-name" value="contact" />
+                        <p class="hidden">
+                            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                        </p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label
@@ -311,15 +332,8 @@
     <footer class="border-t border-slate-200 dark:border-slate-800 py-12 px-6 md:px-10">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="flex items-center gap-3">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
-                    <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold"
-                        fill="#FBBF24">{</text>
-                    <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
-                        fill="#FFFFFF">D</text>
-                    <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
-                        fill="#FBBF24">R</text>
-                    <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold"
-                        fill="#FFFFFF">;</text>
+                <svg class="w-10 h-10 text-primary fill-current" role="img" aria-hidden="true">
+                    <use href="#diar-logo"></use>
                 </svg>
                 <div class="flex flex-col">
                     <span
@@ -356,65 +370,7 @@
     </div>
 
     <!-- [SCRIPTS] Performance Hardening -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.querySelector('form');
-            if (form) {
-                form.addEventListener('submit', (e) => {
-                    if (form.checkValidity()) {
-                        const submitBtn = form.querySelector('button[type="submit"]');
-                        if (submitBtn) {
-                            submitBtn.innerHTML = '<span>Procesando...</span><span class="material-symbols-outlined text-lg animate-spin" aria-hidden="true">autorenew</span>';
-                            // We don't disable the button completely to avoid cancelling the native submit in some browsers, 
-                            // but we add pointer-events-none to prevent double clicks
-                            submitBtn.classList.add('opacity-80', 'cursor-not-allowed', 'pointer-events-none');
-                        }
-                        // Let the native HTML form submit to Netlify, which handles the redirect to thanks.html natively
-                    } else {
-                        e.preventDefault();
-                        form.reportValidity();
-                    }
-                });
-            }
-
-            // Framework Icons Logic
-            const techIcons = document.querySelectorAll('.tech-icon');
-            const techDisplay = document.getElementById('tech-display');
-
-            if (techIcons.length > 0 && techDisplay) {
-                const textSpan = document.getElementById('tech-text');
-                let displayTimeout;
-
-                techIcons.forEach(icon => {
-                    icon.addEventListener('click', () => {
-                        const info = icon.getAttribute('data-info');
-
-                        // Resetea iconos
-                        techIcons.forEach(i => {
-                            i.classList.remove('opacity-100', 'scale-110', '-translate-y-1');
-                        });
-
-                        // Highlight seleccionado
-                        icon.classList.add('opacity-100', 'scale-110', '-translate-y-1');
-
-                        // Muestra el terminal del lado derecho
-                        clearTimeout(displayTimeout);
-                        textSpan.textContent = info;
-                        techDisplay.classList.remove('opacity-0');
-                        techDisplay.classList.add('opacity-100');
-
-                        // Escala apagado depues de 4 segundos
-                        displayTimeout = setTimeout(() => {
-                            techDisplay.classList.remove('opacity-100');
-                            techDisplay.classList.add('opacity-0');
-                            icon.classList.remove('opacity-100', 'scale-110', '-translate-y-1');
-                        }, 4000);
-                    });
-                });
-            }
-        });
-    </script>
-    <!-- No more CDN or Inline Config -->
+    <script src="js/contact-engine.js" type="module"></script>
 </body>
 
 </html>

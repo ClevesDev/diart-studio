@@ -108,9 +108,17 @@
         href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
 
+    <!-- CORE ASSETS PRELOAD (LCP Optimization) -->
+    <link rel="preload" href="./css/style.css" as="style" fetchpriority="high" />
+    <link rel="preload" href="./img/home_item1.avif" as="image" type="image/avif" fetchpriority="high" />
+
     <!-- PRODUCTION CSS (Tailwind v4.0 Compiled) -->
     <link rel="stylesheet" href="./css/style.css" />
 
+    <!-- PRE-RENDER THEME ENGINE (Prevent Flash) -->
+    <script>
+        if (localStorage.getItem('theme') === 'light') document.documentElement.classList.remove('dark');
+    </script>
 </head>
 
 <body
@@ -169,6 +177,13 @@
                     href="#work">Capsule</a>
                 <a class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors"
                     href="contact.html">Contacto</a>
+                <!-- Theme Switcher -->
+                <button id="theme-toggle"
+                    class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
+                    aria-label="Toggle Theme Mode">
+                    <span class="ui-sun-icon material-symbols-outlined text-[20px] text-amber-500 hidden">light_mode</span>
+                    <span class="ui-moon-icon material-symbols-outlined text-[20px] text-slate-400">dark_mode</span>
+                </button>
             </nav>
             <a href="contact.html"
                 class="hidden sm:inline-flex items-center justify-center bg-background-light text-void px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group"
@@ -223,9 +238,11 @@
                         <picture>
                             <!-- Adaptive High-Compression AVIF -->
                             <source srcset="./img/home_item1.avif" type="image/avif">
-                            <!-- High-performance loading fallback -->
+                            <!-- High-performance loading WebP fallback -->
+                            <source srcset="./img/home_item1.webp" type="image/webp">
+                            <!-- Universal standard fallback -->
                             <img class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 transition-transform duration-700 group-hover:scale-105"
-                                alt="Diar Studio Flutter & Dart Engineering Dashboard" src="./img/home_item1.avif"
+                                alt="Diar Studio Flutter & Dart Engineering Dashboard" src="./img/home_item1.webp"
                                 width="1200" height="800" fetchpriority="high" decoding="async" loading="eager" />
                         </picture>
                         <div
@@ -401,7 +418,7 @@
         </div>
     </footer>
 
-    <div id="audit-bot" class="fixed right-6 z-99 pointer-events-none transition-all duration-1000"
+    <div id="audit-bot" class="fixed right-6 z-100 pointer-events-none transition-all duration-1000"
         style="top: 20%; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); will-change: top, transform, right;"
         data-state="idle" aria-hidden="true">
         <div class="bot-levitate">
@@ -422,71 +439,7 @@
     </div>
 
     <!-- [SCRIPTS] Performance Hardening -->
-    <script>
-        const initAuditBot = () => {
-            const bot = document.getElementById('audit-bot');
-            const sections = ['hero', 'work', 'contact'].map(id => document.getElementById(id));
-
-            const config = { rootMargin: '-20% 0px -20% 0px', threshold: 0.1 };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (!entry.isIntersecting) return;
-
-                    switch (entry.target.id) {
-                        case 'hero':
-                            bot.setAttribute('data-state', 'idle');
-                            bot.style.top = '25%';
-                            bot.style.right = '6%';
-                            break;
-                        case 'work':
-                            bot.setAttribute('data-state', 'audit');
-                            bot.style.top = '50%';
-                            bot.style.right = '4%';
-                            break;
-                        case 'contact':
-                            bot.setAttribute('data-state', 'handshake');
-                            bot.style.top = '80%';
-                            bot.style.right = '10%';
-                            break;
-                    }
-                });
-            }, config);
-
-            sections.forEach(sec => sec && observer.observe(sec));
-
-            // [CINEMATIC TRIGGER] CTA Animation
-            const ctaHeader = document.getElementById('cta-header');
-            const ctaPhoton = document.getElementById('cta-photon');
-            const ctaObserver = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    ctaPhoton.classList.add('animate-photon');
-                    ctaHeader.classList.add('animate-reveal');
-                    ctaObserver.unobserve(entries[0].target);
-                }
-            }, { threshold: 0.8 });
-            ctaHeader && ctaObserver.observe(ctaHeader);
-
-            // [CONVERSION] Intercept Direct Contact Form
-            const formHandshake = document.querySelector('form[name="contact-diar-studio"]');
-            const btnHandshake = document.getElementById('btn-handshake');
-
-            if (formHandshake && btnHandshake) {
-                formHandshake.addEventListener('submit', (e) => {
-                    const emailInput = formHandshake.querySelector('input[type="email"]');
-                    if (emailInput && !emailInput.value) {
-                        e.preventDefault();
-                        emailInput.focus();
-                        return;
-                    }
-                    btnHandshake.innerHTML = 'PROCESSING...';
-                    btnHandshake.classList.add('opacity-80', 'cursor-not-allowed', 'pointer-events-none');
-                });
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', initAuditBot);
-    </script>
+    <script src="js/main.js" type="module"></script>
 </body>
 
 </html>

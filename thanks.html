@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en">
+<html class="dark" lang="es">
 
 <head>
     <!-- [1] SEO & ARCHITECTURE METADATA -->
@@ -14,7 +14,7 @@
 
     <!-- ENTERPRISE SECURITY POLICY -->
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://lh3.googleusercontent.com data:; connect-src 'self';" />
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://lh3.googleusercontent.com data:; connect-src 'self';" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
@@ -22,38 +22,34 @@
     <!-- ASSETS: FONTS & ICONS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;800&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
-    <style>
-        :root {
-            --color-primary: #3b83f7;
-            --color-platinum: #f5f7f8;
-            --color-void: #0b0b0b;
-        }
+    <link rel="stylesheet" href="./css/style.css" />
 
-        body {
-            font-family: 'Geist', sans-serif;
-        }
-
-        .swiss-grid {
-            background-image:
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    </style>
+    <!-- PRE-RENDER THEME ENGINE (Prevent Flash) -->
+    <script>
+        if (localStorage.getItem('theme') === 'light') document.documentElement.classList.remove('dark');
+    </script>
 </head>
 
 <body class="bg-background-dark font-display antialiased selection:bg-primary/30">
+
+    <!-- [ATMOSPHERE] SVG Sprites (Logo Architecture) -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;" aria-hidden="true">
+        <symbol id="diar-logo" viewBox="0 0 200 200">
+            <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold" fill="currentColor">{</text>
+            <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="currentColor">D</text>
+            <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="currentColor">R</text>
+            <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold" fill="currentColor">;</text>
+        </symbol>
+        <symbol id="diar-logo-colored" viewBox="0 0 200 200">
+            <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold" fill="#FBBF24">{</text>
+            <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="#FFFFFF">D</text>
+            <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="#FBBF24">R</text>
+            <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold" fill="#FFFFFF">;</text>
+        </symbol>
+    </svg>
+
     <div class="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden">
         <!-- Swiss Grid Overlay -->
         <div class="absolute inset-0 swiss-grid pointer-events-none"></div>
@@ -64,17 +60,20 @@
         <!-- Header / Logo -->
         <header class="absolute top-0 w-full flex justify-between items-center px-8 py-8 md:px-12">
             <a href="index.html" class="flex items-center gap-2 group" aria-label="Diar Studio Home">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
-                    class="w-9 h-9 text-primary fill-current transition-transform duration-500 group-hover:-translate-x-1"
+                <svg class="w-9 h-9 text-primary fill-current transition-transform duration-500 group-hover:-translate-x-1"
                     role="img" aria-hidden="true">
-                    <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold">{</text>
-                    <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold">D</text>
-                    <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold">R</text>
-                    <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold">;</text>
+                    <use href="#diar-logo"></use>
                 </svg>
                 <span class="text-slate-100 font-bold tracking-tighter text-lg uppercase">Diar Studio</span>
             </a>
-            <div class="hidden md:block">
+            <div class="hidden md:flex items-center gap-6">
+                <!-- Theme Switcher -->
+                <button id="theme-toggle"
+                    class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
+                    aria-label="Toggle Theme Mode">
+                    <span class="ui-sun-icon material-symbols-outlined text-[20px] text-amber-500 hidden">light_mode</span>
+                    <span class="ui-moon-icon material-symbols-outlined text-[20px] text-slate-400">dark_mode</span>
+                </button>
                 <span class="text-slate-500 text-xs font-mono tracking-widest uppercase">Protocolo: Handshake_Seguro //
                     2026</span>
             </div>
@@ -89,7 +88,7 @@
                     <div class="absolute inset-0 size-3 bg-emerald-500 rounded-full animate-ping opacity-40"></div>
                 </div>
                 <!-- Title -->
-                <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 gradient-text">
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-gradient-silver">
                     Alianza de Ingeniería <br class="hidden md:block" /> Inicializada
                 </h1>
                 <!-- Body -->
@@ -196,69 +195,7 @@
             </div>
         </footer>
     </div>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#3b83f7",
-                        "background-light": "#f5f7f8",
-                        "background-dark": "#0b0b0b",
-                    },
-                    fontFamily: {
-                        "display": ["Geist", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                },
-            },
-        }
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Framework Icons Logic
-            const techIcons = document.querySelectorAll('.tech-icon');
-            const techDisplay = document.getElementById('tech-display');
-
-            if (techIcons.length > 0 && techDisplay) {
-                const textSpan = document.getElementById('tech-text');
-                let displayTimeout;
-
-                techIcons.forEach(icon => {
-                    icon.addEventListener('click', () => {
-                        const info = icon.getAttribute('data-info');
-
-                        // Resetea iconos
-                        techIcons.forEach(i => {
-                            i.classList.remove('opacity-100', 'scale-110', '-translate-y-1');
-                        });
-
-                        // Highlight seleccionado
-                        icon.classList.add('opacity-100', 'scale-110', '-translate-y-1');
-
-                        // Muestra el terminal del lado derecho
-                        clearTimeout(displayTimeout);
-                        textSpan.textContent = info;
-                        techDisplay.classList.remove('opacity-0');
-                        techDisplay.classList.add('opacity-100');
-
-                        // Escala apagado depues de 4 segundos
-                        displayTimeout = setTimeout(() => {
-                            techDisplay.classList.remove('opacity-100');
-                            techDisplay.classList.add('opacity-0');
-                            icon.classList.remove('opacity-100', 'scale-110', '-translate-y-1');
-                        }, 4000);
-                    });
-                });
-            }
-        });
-    </script>
+    <script src="js/thanks-engine.js" type="module"></script>
 </body>
 
 </html>
