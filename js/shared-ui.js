@@ -68,41 +68,6 @@ export const initFormHandler = (formName) => {
     }
 };
 
-/**
- * Theme Engine (Dark/Light Mode)
- * Persistence with localStorage
- */
-export const initTheme = () => {
-    const theme = localStorage.getItem('theme');
-    const html = document.documentElement;
-    
-    // Check if user has explicit preference
-    if (theme === 'light') {
-        html.classList.remove('dark');
-    } else {
-        html.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-    }
-    updateThemeIcons();
-};
-
-export const toggleTheme = () => {
-    const html = document.documentElement;
-    const isDark = html.classList.toggle('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    updateThemeIcons();
-};
-
-const updateThemeIcons = () => {
-    const sunIcons = document.querySelectorAll('.ui-sun-icon');
-    const moonIcons = document.querySelectorAll('.ui-moon-icon');
-    const isDark = document.documentElement.classList.contains('dark');
-
-    // Show Sun icon in Dark Mode (to go light)
-    // Show Moon icon in Light Mode (to go dark)
-    sunIcons.forEach(icon => icon.classList.toggle('hidden', !isDark));
-    moonIcons.forEach(icon => icon.classList.toggle('hidden', isDark));
-};
 
 
 

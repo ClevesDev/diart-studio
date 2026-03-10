@@ -25,11 +25,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="./css/style.css" />
-
-    <!-- PRE-RENDER THEME ENGINE (Prevent Flash) -->
-    <script>
-        if (localStorage.getItem('theme') === 'light') document.documentElement.classList.remove('dark');
-    </script>
 </head>
 
 <body class="bg-background-dark font-display antialiased selection:bg-primary/30">
@@ -66,14 +61,7 @@
                 </svg>
                 <span class="text-slate-100 font-bold tracking-tighter text-lg uppercase">Diar Studio</span>
             </a>
-            <div class="hidden md:flex items-center gap-6">
-                <!-- Theme Switcher -->
-                <button id="theme-toggle"
-                    class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
-                    aria-label="Toggle Theme Mode">
-                    <span class="ui-sun-icon material-symbols-outlined text-[20px] text-amber-500 hidden">light_mode</span>
-                    <span class="ui-moon-icon material-symbols-outlined text-[20px] text-slate-400">dark_mode</span>
-                </button>
+            <div class="hidden md:block">
                 <span class="text-slate-500 text-xs font-mono tracking-widest uppercase">Protocolo: Handshake_Seguro //
                     2026</span>
             </div>

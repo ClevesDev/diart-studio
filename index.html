@@ -115,10 +115,6 @@
     <!-- PRODUCTION CSS (Tailwind v4.0 Compiled) -->
     <link rel="stylesheet" href="./css/style.css" />
 
-    <!-- PRE-RENDER THEME ENGINE (Prevent Flash) -->
-    <script>
-        if (localStorage.getItem('theme') === 'light') document.documentElement.classList.remove('dark');
-    </script>
 </head>
 
 <body
@@ -177,13 +173,6 @@
                     href="#work">Capsule</a>
                 <a class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors"
                     href="contact.html">Contacto</a>
-                <!-- Theme Switcher -->
-                <button id="theme-toggle"
-                    class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
-                    aria-label="Toggle Theme Mode">
-                    <span class="ui-sun-icon material-symbols-outlined text-[20px] text-amber-500 hidden">light_mode</span>
-                    <span class="ui-moon-icon material-symbols-outlined text-[20px] text-slate-400">dark_mode</span>
-                </button>
             </nav>
             <a href="contact.html"
                 class="hidden sm:inline-flex items-center justify-center bg-background-light text-void px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group"

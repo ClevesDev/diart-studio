@@ -1,5 +1,5 @@
 // DIAR STUDIO - Main Landing Engine v1.0
-import { initFormHandler, applyGlobalConfig, initTheme, toggleTheme } from './shared-ui.js';
+import { initFormHandler, applyGlobalConfig } from './shared-ui.js';
 import { CONFIG } from './config.js';
 
 const initAuditBot = () => {
@@ -49,10 +49,6 @@ const initAuditBot = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     applyGlobalConfig(CONFIG);
-    initTheme();
     initAuditBot();
     initFormHandler('contact');
-
-    // Theme Switch Event
-    document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
 });
