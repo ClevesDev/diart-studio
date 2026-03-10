@@ -140,9 +140,7 @@
 
         @media (max-width: 768px) {
             #audit-bot {
-                left: 4 !important;
-                bottom: 24px !important;
-                top: auto !important;
+                left: 1rem !important;
             }
         }
     </style>
@@ -154,8 +152,8 @@
     <!-- Pre-rendered PDF Container (Kept in layout but invisible to avoid capture issues) -->
     <div id="pdf-container" style="visibility: hidden; position: absolute; top: 0; left: -9999px; z-index: -100;"></div>
 
-    <div id="audit-bot" class="fixed left-6 z-99 pointer-events-none transition-all duration-1000"
-        style="top: 30%; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); will-change: top, transform, left;"
+    <div id="audit-bot" class="fixed left-6 z-100 pointer-events-none transition-all duration-700 ease-out"
+        style="top: 30%; will-change: top, transform, left;"
         data-state="idle" aria-hidden="true">
         <div class="bot-levitate relative">
             <div id="bot-message" class="bot-bubble"></div>
@@ -202,7 +200,7 @@
                     href="contact.html">Contacto</a>
             </nav>
             <a href="contact.html"
-                class="hidden sm:inline-flex items-center justify-center bg-background-light text-void px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group">
+                class="flex items-center justify-center bg-background-light text-void px-4 sm:px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group">
                 Iniciar Proyecto
                 <span class="ml-2 font-mono transition-transform duration-300 group-hover:translate-x-1"
                     aria-hidden="true">_</span>
@@ -539,10 +537,12 @@
                     colors: {
                         "primary": "#3b83f7",
                         "background-dark": "#101722",
-                        "background-light": "#f5f7f8"
+                        "background-light": "#f5f7f8",
+                        "void": "#0b0b0b"
                     },
                     fontFamily: { "display": ["Geist", "sans-serif"] },
-                    borderRadius: { "DEFAULT": "0.125rem" }
+                    borderRadius: { "DEFAULT": "0.125rem" },
+                    zIndex: { "100": "100" }
                 }
             }
         };
@@ -631,6 +631,22 @@
             const total = (baseValue + addonsAmt) * multiplier;
 
             if (e && (e.type === 'change' || e.type === 'input')) {
+                // Smooth move bot using viewport relative positioning
+                const target = e.target;
+                const rect = target.getBoundingClientRect();
+                const bot = document.getElementById('audit-bot');
+                const isMobile = window.innerWidth <= 768;
+                
+                // Calculate safe viewport position
+                const targetY = Math.max(80, Math.min(rect.top, window.innerHeight - 100));
+                
+                bot.style.top = `${targetY}px`;
+                bot.style.left = isMobile ? '1rem' : '1.5rem';
+                bot.style.position = 'fixed'; // Keep fixed to avoid jumps when switching modes
+
+                // Prevent immediate scroll override
+                bot.setAttribute('data-lock', 'true');
+                setTimeout(() => bot.removeAttribute('data-lock'), 1500);
                 if (total >= 10000) {
                     showBotMessage("!ALELLUYA HABEMUS PRESUPUESTO!");
                 } else if (e.target.name === 'addon' && currentAddonCount < lastAddonCount) {
@@ -808,6 +824,23 @@
         });
 
         updatePrice();
+
+        // AuditBot Floating and Scroll Follow Scroll Logic
+        window.addEventListener('scroll', () => {
+            const bot = document.getElementById('audit-bot');
+            if (!bot.hasAttribute('data-lock')) {
+                const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+                const targetTop = 20 + (scrollPercent * 60); 
+                bot.style.top = `${targetTop}%`;
+                bot.style.position = 'fixed';
+                
+                if (window.innerWidth <= 768) {
+                    bot.style.left = '1rem';
+                } else {
+                    bot.style.left = '1.5rem';
+                }
+            }
+        });
     </script>
 </body>
 
