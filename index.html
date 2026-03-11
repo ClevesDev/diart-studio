@@ -16,12 +16,7 @@
     <meta name="author" content="ClevesDev | Diar Studio" />
     <link rel="author" href="https://github.com/ClevesDev" />
 
-    <!-- ENTERPRISE SECURITY POLICY -->
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://lh3.googleusercontent.com data:; connect-src 'self'; frame-ancestors 'none';" />
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+    <!-- ENTERPRISE SECURITY POLICY DELGADA (Headers configurados en servidor o _headers de Netlify) -->
 
     <!-- SOCIAL GRAPH (Google 2026 Standards) -->
     <meta property="og:type" content="website" />
@@ -303,112 +298,231 @@
         </section>
 
         <!-- [BENTO] Semantic Capabilities Grid -->
-        <section id="work" class="max-w-7xl mx-auto px-6 py-24 border-x border-slate-200 dark:border-slate-800 section-fade-in scroll-mt-24">
+        <section id="work"
+            class="max-w-7xl mx-auto px-6 py-24 border-x border-slate-200 dark:border-slate-800 section-fade-in scroll-mt-24">
             <div class="text-center mb-16">
-                <span class="text-xs font-bold text-primary uppercase tracking-[0.3em] block mb-4">Competencias Core</span>
+                <span class="text-xs font-bold text-primary uppercase tracking-[0.3em] block mb-4">Competencias
+                    Core</span>
                 <h2 class="text-4xl font-black uppercase tracking-tighter">Servicios de Ingeniería</h2>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-6 auto-rows-[340px] md:auto-rows-[300px]">
-                
+
                 <!-- Tarjeta 1: Auditoría UX (Border Glow) | Span 2 Cols -->
                 <article class="md:col-span-2 lg:col-span-2 glow-card relative group shadow-lg">
-                    <div class="glow-card-inner p-8 flex flex-col justify-between">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="material-symbols-outlined text-primary text-4xl" aria-hidden="true">analytics</span>
-                            <div class="size-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true"></div>
+                    <div class="glow-card-inner relative overflow-hidden flex">
+                        <!-- Right Visual (Image Background via Absolute Setup) -->
+                        <div class="absolute inset-y-0 right-0 w-2/3 md:w-3/5 h-full z-0 opacity-80 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" style="mask-image: linear-gradient(to left, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 100%);">
+                            <img src="img/ui_item3.webp" alt="Auditoría de UX/UI" loading="lazy" decoding="async" class="w-full h-full object-cover">
                         </div>
-                        <div>
-                            <h4 class="font-black uppercase tracking-tight text-xl mb-3 platinum-blue-accent">Auditoría & <br> Estrategia UX</h4>
-                            <p class="text-xs text-slate-400 font-medium leading-relaxed">
-                                Análisis forense de assets para identificar y resolver fricción en la capa de interacción y arquitectura de información.
-                            </p>
+                        
+                        <!-- Left Content -->
+                        <div class="relative z-10 flex flex-col justify-between p-8 w-[70%] md:w-3/4">
+                            <div class="flex items-center justify-between mb-4">
+                <!-- SVG de Wireframe con Lupa / Análisis Heurístico -->
+                <svg class="w-10 h-10 text-primary transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-opacity="0.4"></rect>
+                    <path d="M3 9h18" stroke-opacity="0.4"></path>
+                    <path d="M9 21V9" stroke-opacity="0.4"></path>
+                    <circle cx="15" cy="15" r="3" stroke="currentColor" stroke-width="2"></circle>
+                    <path d="m21 21-4.3-4.3" stroke="currentColor" stroke-width="2"></path>
+                </svg>
+                                <div class="size-2 rounded-full bg-emerald-500 animate-pulse hidden md:block" aria-hidden="true"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-black uppercase tracking-tight text-xl mb-3 platinum-blue-accent" aria-label="Auditoría & Estrategia UX/UI">Auditoría & <br> Estrategia UX/UI</h4>
+                                <p class="text-xs text-slate-400 font-medium leading-relaxed max-w-[200px] md:max-w-[240px]">
+                                    Optimización de flujos y conversión mediante análisis heurístico
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </article>
-                
+
                 <!-- Tarjeta 2: Escalabilidad Frontend (Carrusel Flutter) | Span 4 Cols -->
-                <article class="md:col-span-2 lg:col-span-4 bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-800 relative overflow-hidden group shadow-lg rounded-[var(--radius-xl)]">
+                <article
+                    class="md:col-span-2 lg:col-span-4 bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-800 relative overflow-hidden group shadow-lg rounded-[var(--radius-xl)]">
                     <div id="flutter-carousel" class="absolute inset-0 z-0">
                         <!-- Controls hidden initially, reveal on hover -->
-                        <div class="absolute inset-x-0 bottom-6 z-30 flex justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <button data-carousel-indicator class="w-6 h-2 rounded-full bg-primary transition-all duration-300 cursor-pointer" aria-label="Ver slide 1"></button>
-                            <button data-carousel-indicator class="w-2 h-2 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300 cursor-pointer" aria-label="Ver slide 2"></button>
-                            <button data-carousel-indicator class="w-2 h-2 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300 cursor-pointer" aria-label="Ver slide 3"></button>
+                        <div
+                            class="absolute inset-x-0 bottom-6 z-30 flex justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <button data-carousel-indicator
+                                class="w-6 h-2 rounded-full bg-primary transition-all duration-300 cursor-pointer"
+                                aria-label="Ver slide 1"></button>
+                            <button data-carousel-indicator
+                                class="w-2 h-2 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300 cursor-pointer"
+                                aria-label="Ver slide 2"></button>
+                            <button data-carousel-indicator
+                                class="w-2 h-2 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300 cursor-pointer"
+                                aria-label="Ver slide 3"></button>
                         </div>
-                        
+
                         <!-- Slide 1: Dashboards -->
-                        <div data-carousel-slide class="absolute inset-0 transition-all duration-700 ease-in-out opacity-100 scale-100 z-10" aria-hidden="false">
-                            <div class="absolute inset-0 bg-background-dark/80 z-10 max-w-[60%] p-8 flex flex-col justify-center backdrop-blur-sm mask-image-gradient">
-                                <span class="material-symbols-outlined text-primary text-3xl mb-4" aria-hidden="true">dashboard</span>
-                                <h4 class="font-black uppercase tracking-tight text-2xl mb-2 text-white">Escalabilidad<br>Frontend</h4>
-                                <p class="text-sm text-slate-300 font-medium max-w-sm mb-4">Interfaces de alto rendimiento en <strong class="text-primary">Flutter</strong> y React. Arquitecturas Atómicas para productos financieros y dashboards B2B.</p>
-                                <span class="text-[10px] font-mono text-primary bg-primary/10 px-2 py-1 inline-flex w-fit rounded-sm border border-primary/20">Render.engine("skia")</span>
+                        <div data-carousel-slide
+                            class="absolute inset-0 transition-all duration-700 ease-in-out opacity-100 scale-100 z-10"
+                            aria-hidden="false">
+                            <div
+                                class="absolute inset-0 bg-background-dark/80 z-10 max-w-[60%] p-8 flex flex-col justify-center backdrop-blur-sm mask-image-gradient">
+                                <span class="material-symbols-outlined text-primary text-3xl mb-4"
+                                    aria-hidden="true">dashboard</span>
+                                <h4 class="font-black uppercase tracking-tight text-2xl mb-2 text-white">
+                                    Escalabilidad<br>Frontend</h4>
+                                <p class="text-sm text-slate-300 font-medium max-w-sm mb-4">Interfaces de alto
+                                    rendimiento en <strong class="text-primary">Flutter</strong> y React. Arquitecturas
+                                    Atómicas para productos financieros y dashboards B2B.</p>
+                                <span
+                                    class="text-[10px] font-mono text-primary bg-primary/10 px-2 py-1 inline-flex w-fit rounded-sm border border-primary/20">Render.engine("skia")</span>
                             </div>
-                            <div class="absolute inset-0 bg-slate-900 border-l border-slate-800 overflow-hidden ml-[40%] flex items-center justify-center">
-                                <span class="text-slate-700 text-6xl font-black opacity-20 rotate-[-15deg] font-mono">APP_DASHBOARD</span>
-                                <div class="absolute bottom-[-10%] right-[-10%] blur-[100px] size-64 bg-primary/20 rounded-full" aria-hidden="true"></div>
+                            <div
+                                class="absolute inset-0 bg-slate-900 border-l border-slate-800 overflow-hidden ml-[40%] flex items-center justify-center">
+                                <img src="img/flutter_item4.webp" alt="Demostración de Arquitectura Flutter - Item 4"
+                                    loading="lazy" decoding="async" class="w-full h-full object-cover">
                             </div>
                         </div>
 
                         <!-- Slide 2: Mobile / Layouts Modernos -->
-                        <div data-carousel-slide class="absolute inset-0 transition-all duration-700 ease-in-out opacity-0 scale-95 z-0" aria-hidden="true">
-                            <div class="absolute inset-0 bg-background-dark/80 z-10 max-w-[60%] p-8 flex flex-col justify-center backdrop-blur-sm mask-image-gradient">
-                                <span class="material-symbols-outlined text-pink-500 text-3xl mb-4" aria-hidden="true">smartphone</span>
-                                <h4 class="font-black uppercase tracking-tight text-2xl mb-2 text-white">Lógicas<br>Móviles Nativas</h4>
-                                <p class="text-sm text-slate-300 font-medium max-w-sm mb-4">Despliegue multiplataforma con una sola base de código Dart. Aplicaciones que se sienten instintivas a 120fps.</p>
-                                <span class="text-[10px] font-mono text-pink-400 bg-pink-500/10 px-2 py-1 inline-flex w-fit rounded-sm border border-pink-500/20">Bloc.state(connected)</span>
+                        <div data-carousel-slide
+                            class="absolute inset-0 transition-all duration-700 ease-in-out opacity-0 scale-95 z-0"
+                            aria-hidden="true">
+                            <div
+                                class="absolute inset-0 bg-background-dark/80 z-10 max-w-[60%] p-8 flex flex-col justify-center backdrop-blur-sm mask-image-gradient">
+                                <span class="material-symbols-outlined text-pink-500 text-3xl mb-4"
+                                    aria-hidden="true">smartphone</span>
+                                <h4 class="font-black uppercase tracking-tight text-2xl mb-2 text-white">
+                                    Lógicas<br>Móviles Nativas</h4>
+                                <p class="text-sm text-slate-300 font-medium max-w-sm mb-4">Despliegue multiplataforma
+                                    con una sola base de código Dart. Aplicaciones que se sienten instintivas a 120fps.
+                                </p>
+                                <span
+                                    class="text-[10px] font-mono text-pink-400 bg-pink-500/10 px-2 py-1 inline-flex w-fit rounded-sm border border-pink-500/20">Bloc.state(connected)</span>
                             </div>
-                            <div class="absolute inset-0 bg-slate-900 border-l border-slate-800 overflow-hidden ml-[40%] flex items-center justify-center">
-                                 <span class="text-slate-700 text-6xl font-black opacity-20 rotate-[15deg] font-mono">AUTH_FLOW</span>
-                                 <div class="absolute top-[-10%] right-[-10%] blur-[100px] size-64 bg-pink-500/10 rounded-full" aria-hidden="true"></div>
+                            <div
+                                class="absolute inset-0 bg-slate-900 border-l border-slate-800 overflow-hidden ml-[40%] flex items-center justify-center">
+                                <img src="img/flutter_item5.webp" alt="Demostración de Arquitectura Flutter - Item 5"
+                                    loading="lazy" decoding="async" class="w-full h-full object-cover">
                             </div>
                         </div>
 
                         <!-- Slide 3: Web Components -->
-                        <div data-carousel-slide class="absolute inset-0 transition-all duration-700 ease-in-out opacity-0 scale-95 z-0" aria-hidden="true">
-                            <div class="absolute inset-0 bg-background-dark/80 z-10 max-w-[60%] p-8 flex flex-col justify-center backdrop-blur-sm mask-image-gradient">
-                                <span class="material-symbols-outlined text-emerald-500 text-3xl mb-4" aria-hidden="true">components</span>
-                                <h4 class="font-black uppercase tracking-tight text-2xl mb-2 text-white">Diseño<br>Universal</h4>
-                                <p class="text-sm text-slate-300 font-medium max-w-sm mb-4">Frameworks UI adaptativos creados para operar sistemáticamente en cualquier resolución sin comprometer el layout.</p>
-                                <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 inline-flex w-fit rounded-sm border border-emerald-500/20">Layout.adaptive(true)</span>
+                        <div data-carousel-slide
+                            class="absolute inset-0 transition-all duration-700 ease-in-out opacity-0 scale-95 z-0"
+                            aria-hidden="true">
+                            <div
+                                class="absolute inset-0 bg-background-dark/80 z-10 max-w-[60%] p-8 flex flex-col justify-center backdrop-blur-sm mask-image-gradient">
+                                <span class="material-symbols-outlined text-emerald-500 text-3xl mb-4"
+                                    aria-hidden="true">components</span>
+                                <h4 class="font-black uppercase tracking-tight text-2xl mb-2 text-white">
+                                    Diseño<br>Universal</h4>
+                                <p class="text-sm text-slate-300 font-medium max-w-sm mb-4">Frameworks UI adaptativos
+                                    creados para operar sistemáticamente en cualquier resolución sin comprometer el
+                                    layout.</p>
+                                <span
+                                    class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 inline-flex w-fit rounded-sm border border-emerald-500/20">Layout.adaptive(true)</span>
                             </div>
-                            <div class="absolute inset-0 bg-slate-900 border-l border-slate-800 overflow-hidden ml-[40%] flex items-center justify-center">
-                                 <span class="text-slate-700 text-6xl font-black opacity-20 rotate-[-5deg] font-mono">GRID_SYSTEM</span>
-                                 <div class="absolute bottom-[-10%] right-[30%] blur-[100px] size-64 bg-emerald-500/10 rounded-full" aria-hidden="true"></div>
+                            <div
+                                class="absolute inset-0 bg-slate-900 border-l border-slate-800 overflow-hidden ml-[40%] flex items-center justify-center">
+                                <img src="img/flutter_item6.webp" alt="Demostración de Arquitectura Flutter - Item 6"
+                                    loading="lazy" decoding="async" class="w-full h-full object-cover">
                             </div>
                         </div>
                     </div>
                 </article>
 
                 <!-- Tarjeta 3: Seguridad Web | Span 3 Cols -->
-                <article class="md:col-span-2 lg:col-span-3 bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-800 p-8 flex flex-col justify-between group hover:border-primary/50 transition-colors rounded-[var(--radius-xl)] shadow-lg relative overflow-hidden">
-                    <span class="material-symbols-outlined text-primary text-4xl mb-6 relative z-10" aria-hidden="true">shield_lock</span>
-                    <div class="relative z-10">
-                        <h4 class="font-black uppercase tracking-tight text-lg mb-2 text-inherit">Seguridad Web OWASP</h4>
-                        <p class="text-xs text-slate-500 font-medium">Políticas de seguridad estrictas (CSP Nivel 3), mitigación integral de XSS/Clickjacking e infraestructura "Secure by Default".</p>
+                <article class="md:col-span-2 lg:col-span-3 glass-card bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-800 p-8 group hover:border-primary/50 transition-colors rounded-[var(--radius-xl)] shadow-lg relative overflow-hidden flex flex-col md:flex-row gap-6">
+                    <!-- Fondo de Ciberseguridad integrado -->
+                    <div class="absolute inset-y-0 left-0 w-full md:w-1/2 z-0 opacity-10 transition-opacity duration-500 group-hover:opacity-30 pointer-events-none" style="mask-image: linear-gradient(to right, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);">
+                        <img src="img/ciberseguridad_item1.webp" alt="Escudo y Ciberseguridad" loading="lazy" decoding="async" class="w-full h-full object-cover mix-blend-luminosity">
+                    </div>
+                    
+                    <div class="flex-1 flex flex-col justify-between relative z-10 w-full md:w-1/2">
+                        <!-- Icono SVG con animación de blindaje -->
+                        <svg class="w-12 h-12 text-primary mb-6 transition-transform duration-500 group-hover:scale-125" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path class="transition-transform duration-500 origin-bottom transform group-hover:scale-y-0 opacity-100 group-hover:opacity-0" d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            <!-- Estado activo: Se "cierra" y se ilumina verde -->
+                            <path class="transition-transform duration-500 origin-bottom transform scale-y-0 opacity-0 group-hover:scale-y-100 group-hover:opacity-100 text-emerald-500" d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                        </svg>
+                        <div>
+                            <h4 class="font-black uppercase tracking-tight text-lg mb-2 text-inherit" aria-label="Seguridad Web OWASP">Seguridad Web OWASP</h4>
+                            <p class="text-xs text-slate-500 font-medium">Políticas de seguridad estrictas (CSP Nivel 3), mitigación integral de XSS/Clickjacking e infraestructura "Secure by Default".</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Cascada de Código de Seguridad (Visual Derecho) -->
+                    <div class="flex-1 relative w-full md:w-1/2 min-h-[140px] md:min-h-full rounded-md overflow-hidden bg-slate-950/80 border border-slate-700/50 backdrop-blur-sm z-10 flex" aria-hidden="true">
+                        <div class="absolute right-0 top-0 bottom-0 w-full text-right overflow-hidden flex flex-col items-end pr-4 py-4 opacity-90" style="mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);">
+                            <!-- Velocidad variable en hover: simula "aceleración/blindaje activo" -->
+                            <div class="animate-scroll-logs flex flex-col gap-2 font-mono text-[10px] sm:text-xs text-emerald-400 font-semibold drop-shadow-[0_0_2px_rgba(52,211,153,0.8)] z-10 whitespace-nowrap group-hover:[animation-duration:3.5s] transition-[animation-duration] duration-700">
+                                <span>[OK] Global CDN</span>
+                                <span class="text-cyan-400">[SAFE] Edge Functions</span>
+                                <span class="text-red-400 font-bold drop-shadow-[0_0_5px_rgba(248,113,113,0.8)]">[BLOCKED] XSS Attack</span>
+                                <span>[SECURE] CSP L3</span>
+                                <span class="text-cyan-400">[ENCRYPTED] SSL/TLS</span>
+                                <span class="text-emerald-500">[SYSTEM] WAF Active</span>
+                                <span>[OK] 0 Vulnerabilities</span>
+                                <!-- Duplicado para Scroll Infinito CSS -->
+                                <span class="mt-4">[OK] Global CDN</span>
+                                <span class="text-cyan-400">[SAFE] Edge Functions</span>
+                                <span class="text-red-400 font-bold drop-shadow-[0_0_5px_rgba(248,113,113,0.8)]">[BLOCKED] XSS Attack</span>
+                                <span>[SECURE] CSP L3</span>
+                                <span class="text-cyan-400">[ENCRYPTED] SSL/TLS</span>
+                                <span class="text-emerald-500">[SYSTEM] WAF Active</span>
+                                <span>[OK] 0 Vulnerabilities</span>
+                            </div>
+                        </div>
                     </div>
                     <!-- Ambient Decal -->
-                    <div class="absolute right-[-10%] bottom-[-10%] opacity-[0.03] transition-transform duration-500 group-hover:scale-110" aria-hidden="true">
-                        <span class="material-symbols-outlined text-[180px]">gpp_good</span>
+                    <div class="absolute right-[-10%] bottom-[-10%] opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none z-0" aria-hidden="true">
+                        <span class="material-symbols-outlined text-[180px]">security</span>
                     </div>
                 </article>
 
                 <!-- Tarjeta 4: Rendimiento | Span 3 Cols -->
-                <article class="md:col-span-2 lg:col-span-3 bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-800 p-8 flex flex-col justify-between group hover:border-primary/50 transition-colors rounded-[var(--radius-xl)] shadow-lg relative overflow-hidden">
-                    <span class="material-symbols-outlined text-primary text-4xl mb-6 relative z-10" aria-hidden="true">speed</span>
-                    <div class="relative z-10">
-                        <h4 class="font-black uppercase tracking-tight text-lg mb-2 text-inherit">Optimización al Edge</h4>
-                        <p class="text-xs text-slate-500 font-medium">Core Web Vitals perfeccionadas. Cargas sub-segundo con pre-renderizado predictivo y activos altamente comprimidos (AVIF/WebP).</p>
+                <article
+                    class="md:col-span-2 lg:col-span-3 glass-card bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-800 p-8 group hover:border-primary/50 transition-colors rounded-[var(--radius-xl)] shadow-lg relative overflow-hidden flex flex-col md:flex-row gap-6">
+                    <div class="flex-1 flex flex-col justify-between relative z-10 w-full md:w-1/2">
+                        <!-- Rocket SVG with Vibrate and Takeoff on group-hover -->
+                        <div
+                            class="w-12 h-12 mb-6 text-primary transition-transform duration-700 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] group-hover:-translate-y-6 group-hover:translate-x-2 group-hover:rotate-[20deg] group-hover:animate-pulse">
+                            <svg class="w-full h-full" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                aria-hidden="true">
+                                <path
+                                    d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z">
+                                </path>
+                                <path
+                                    d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z">
+                                </path>
+                                <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+                                <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-black uppercase tracking-tight text-lg mb-2 text-inherit"
+                                aria-label="Optimización Edge & SEO de Alto Rendimiento">Optimización Edge & SEO de Alto Rendimiento</h4>
+                            <p class="text-xs text-slate-500 font-medium">Maximizamos la visibilidad orgánica y la velocidad de carga mediante arquitectura distribuida y cumplimiento estricto de Core Web Vitals.</p>
+                        </div>
                     </div>
-                     <!-- Ambient Decal -->
-                     <div class="absolute right-[-10%] bottom-[-10%] opacity-[0.03] transition-transform duration-500 group-hover:scale-110" aria-hidden="true">
+                    <div class="flex-1 relative w-full md:w-1/2 min-h-[140px] md:min-h-full rounded-md overflow-hidden bg-slate-950 border border-slate-700/50"
+                        id="edge-carousel" aria-hidden="true">
+                        
+                        <!-- Carrusel Visual SEO/Edge -->
+                        <img data-sec-slide class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100 saturate-150 contrast-125 brightness-110" style="will-change: filter;" src="img/optimizacion_item5.webp" alt="Optimización SEO y rendimiento Edge - Item 1" loading="lazy" decoding="async" aria-hidden="false">
+                        <img data-sec-slide class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 saturate-150 contrast-125 brightness-110" style="will-change: filter;" src="img/optimizacion_item6.webp" alt="Optimización SEO y rendimiento Edge - Item 2" loading="lazy" decoding="async" aria-hidden="true">
+
+                        <!-- Overlay Color Filter for Deep Blue Tech Temperature -->
+                        <div class="absolute inset-0 bg-blue-900/40 mix-blend-overlay z-0 pointer-events-none"></div>
+                    </div>
+                    <!-- Ambient Decal -->
+                    <div class="absolute right-[-10%] bottom-[-10%] opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none"
+                        aria-hidden="true">
                         <span class="material-symbols-outlined text-[180px]">bolt</span>
                     </div>
                 </article>
 
             </div>
-            
+
             <style>
                 /* Micro-utility embedded locally just for mask-image within this grid (Tailwind v4 allows @theme extensions, but inline is faster for specific component masks without dirtying global scope) */
                 .mask-image-gradient {

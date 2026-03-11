@@ -5,6 +5,7 @@
 import { initFormHandler, applyGlobalConfig } from './shared-ui.js';
 import { CONFIG } from './config.js';
 import { BentoCarousel } from './bento-carousel.js';
+import { initUIEffects } from './modules/ui-effects.js';
 
 /**
  * @function initAuditBot
@@ -68,4 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Iniciar Módulo Seguro del Bento Grid
     new BentoCarousel('#flutter-carousel');
+    
+    // Iniciar Módulo Extra de Efectos Especiales de UI
+    initUIEffects();
 });

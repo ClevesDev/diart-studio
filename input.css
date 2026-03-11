@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/container-queries";
 
 @theme {
     --color-primary: #3b83f7;
@@ -444,6 +446,7 @@
         transition: opacity 0.4s ease;
         animation: spin-beam 3s linear infinite;
         pointer-events: none;
+        will-change: transform;
     }
 
     /* Inner card background to mask the glow and only reveal the border */
@@ -459,5 +462,20 @@
     /* Specific interaction, as per Tailwind v4 we can do this here or directly on HTML */
     .glow-card:hover::before {
         opacity: 1;
+    }
+
+    .animate-scroll-logs {
+        animation: scroll-logs 12s linear infinite;
+        will-change: transform;
+    }
+}
+
+@keyframes scroll-logs {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(0, -50%, 0);
     }
 }
