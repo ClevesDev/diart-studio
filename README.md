@@ -155,6 +155,7 @@ Usuario hace submit
 - **Referrer Policy**: `strict-origin-when-cross-origin` para control de información de referencia.
 - **Honeypot Anti-Spam**: Campo oculto `bot-field` en formularios para filtrar bots sin necesidad de CAPTCHA.
 - **Advanced SEO JSON-LD**: Rich Snippets (Schema.org) configurados semánticamente como `ProfessionalService` para indexación de Google a partir del 2026.
+- **Audit Compliance**: El proyecto ha superado una auditoría técnica integral (Marzo 2026) confirmando cumplimiento de OWASP Top 10 y Core Web Vitals.
 
 ## 🧪 Desarrollo Local
 
@@ -178,15 +179,18 @@ npm run watch
 | **CSS Escalable** | ✅ 100% | Tailwind compilado + variables nativas CSS |
 | **JS Modular** | ✅ 100% | ES Modules sin dependencias externas |
 | **Rendimiento** | ✅ 100% | Animaciones GPU, AVIF, preload, speculation rules |
-| **Seguridad** | ✅ 100% | CSP + Permissions Policy + honeypot + nosniff |
+| **Seguridad** | ✅ 100% | CSP L3 + SRI + DOM Seguro (sin innerHTML) |
 | **SEO** | ✅ 100% | JSON-LD, sitemap, robots, meta OG/Twitter |
+| **Escalabilidad** | ✅ 100% | Arquitectura modular ESM + Tailwind v4 CLI |
 | **DRY (No Repetición)** | ⚠️ 70% | Header/Footer/CSP replicados manualmente entre HTMLs |
 | **Global** | 🔷 **85%** | Base sólida; componentes compartidos mejorarían al 100% |
 
 ## 🗺️ Roadmap de Escalabilidad
 
+- [x] Aplicar `platinum-blue-accent` en todos los títulos de servicios (Consistencia Visual)
+- [x] Homogenizar tipografías de descripciones en Bento Grid
+- [x] Auditoría integral de seguridad y performance (Completado Mar 2026)
 - [ ] Migrar a un SSG ligero (Astro/11ty) para componentizar Header, Footer y Head
-- [ ] Centralizar CSP en archivo `_headers` de Netlify en lugar de `<meta>` por página
 - [ ] Externalizar strings de UI a un archivo de configuración para soporte multi-idioma
 - [ ] Implementar Service Worker para funcionamiento offline
 

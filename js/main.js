@@ -2,7 +2,7 @@
 // [ARCHITECTURE] Bootstrapper for the primary landing experience.
 // Imports shared utilities to decouple logic.
 
-import { initFormHandler, applyGlobalConfig } from './shared-ui.js';
+import { initFormHandler, applyGlobalConfig, initMobileMenu } from './shared-ui.js';
 import { CONFIG } from './config.js';
 import { BentoCarousel } from './bento-carousel.js';
 import { initUIEffects } from './modules/ui-effects.js';
@@ -65,6 +65,7 @@ const initAuditBot = () => {
 document.addEventListener('DOMContentLoaded', () => {
     applyGlobalConfig(CONFIG);
     initAuditBot();
+    initMobileMenu();
     initFormHandler('contact'); // Applies secure custom form submission logic
     
     // Iniciar Módulo Seguro del Bento Grid

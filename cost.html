@@ -13,12 +13,8 @@
     <meta name="description"
         content="Configurador técnico de activos digitales de alta autoridad. Obtén un presupuesto preciso y escalable para tu infraestructura." />
 
-    <!-- ENTERPRISE SECURITY POLICY -->
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://lh3.googleusercontent.com data: blob:; connect-src 'self';" />
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+    <!-- ENTERPRISE SECURITY POLICY delegada al servidor (_headers Netlify) -->
+    <!-- CSP configurada vía HTTP headers para máxima prioridad y sin conflicto con meta tags -->
 
     <!-- ASSETS: FONTS & ICONS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,127 +23,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
 
-    <!-- External PDF Engine -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- CORE ASSETS PRELOAD -->
+    <link rel="preload" href="./css/style.css" as="style" fetchpriority="high" />
 
-    <style>
-        :root {
-            --color-primary: #3b83f7;
-            --color-neon-pink: #f472b6;
-            --color-platinum: #f5f7f8;
-            --color-void: #0b0b0b;
-            --bg-dark: #101722;
-        }
+    <!-- PRODUCTION CSS (Tailwind v4.1 Compiled — mismo pipeline que index.html) -->
+    <link rel="stylesheet" href="./css/style.css" />
 
-        body {
-            font-family: 'Geist', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
+    <!-- External PDF Engine + [SECURITY] SRI Hash para integridad de Supply Chain -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-        .swiss-grid {
-            background-image: radial-gradient(circle at 2px 2px, rgba(59, 131, 247, 0.05) 1px, transparent 0);
-            background-size: 40px 40px;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .glass-card:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(59, 131, 247, 0.4);
-        }
-
-        .text-gradient-silver {
-            background-image: linear-gradient(120deg, #E2E8F0 0%, #FFFFFF 25%, #94A3B8 50%, #F8FAFC 75%, #475569 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Ambient Lights */
-        .ambient-light {
-            position: fixed;
-            width: 80vw;
-            height: 80vh;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.15;
-            z-index: -10;
-            pointer-events: none;
-        }
-
-        .light-left {
-            top: -20%;
-            left: -20%;
-            background: radial-gradient(circle, var(--color-primary), transparent 70%);
-        }
-
-        .light-right {
-            bottom: -20%;
-            right: -20%;
-            background: radial-gradient(circle, var(--color-neon-pink), transparent 70%);
-        }
-
-        /* --- AUDIT-BOT ASSISTANT --- */
-        @keyframes levitate {
-
-            0%,
-            100% {
-                transform: translate3d(0, 0, 0);
-            }
-
-            50% {
-                transform: translate3d(0, -10px, 0);
-            }
-        }
-
-        .bot-levitate {
-            animation: levitate 4s ease-in-out infinite;
-            will-change: transform;
-        }
-
-        .bot-bubble {
-            position: absolute;
-            bottom: 120%;
-            left: 80%;
-            transform: scale(0.8);
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid var(--color-primary);
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 800;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-            backdrop-filter: blur(8px);
-            z-index: 100;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .bot-bubble.show {
-            opacity: 1;
-            transform: scale(1);
-            bottom: 130%;
-        }
-
-        @media (max-width: 768px) {
-            #audit-bot {
-                left: 1rem !important;
-            }
-        }
-    </style>
 </head>
 
 <body
     class="bg-background-dark text-slate-100 transition-colors duration-300 swiss-grid min-h-screen overflow-x-hidden">
+
 
     <!-- Pre-rendered PDF Container (Kept in layout but invisible to avoid capture issues) -->
     <div id="pdf-container" style="visibility: hidden; position: absolute; top: 0; left: -9999px; z-index: -100;"></div>
@@ -180,26 +71,38 @@
         class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-2 group" aria-label="Diar Studio Home">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
-                    class="w-9 h-9 text-primary fill-current transition-transform duration-500 group-hover:rotate-3"
-                    role="img" aria-hidden="true">
-                    <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold">{</text>
-                    <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold">D</text>
-                    <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold">R</text>
-                    <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold">;</text>
-                </svg>
-                <span class="text-lg font-black tracking-tighter uppercase">Diar Studio</span>
+                <img src="assets/diarlogo.svg" alt="DiarStudio Logo" class="w-9 h-9 transition-transform duration-500 group-hover:rotate-3">
+                <div class="flex flex-col">
+                    <span class="text-lg font-black tracking-tighter uppercase leading-none">Diar Studio</span>
+                    <span class="text-[8px] font-black uppercase tracking-[0.2em] text-primary mt-1 hidden sm:block">Engineering v2026</span>
+                </div>
             </a>
-            <nav class="hidden md:flex items-center gap-8" aria-label="Principal Navigation">
-                <a class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors"
-                    href="index.html#solutions">Soluciones</a>
-                <a class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors"
-                    href="index.html#work">Capsule</a>
-                <a class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors"
-                    href="contact.html">Contacto</a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex flex-row items-center justify-center gap-x-12 px-8 py-3 bg-gray-900/40 dark:bg-black/20 backdrop-blur-md border border-white/5 border-b-white/10 rounded-full z-50 shadow-[0_4px_30px_rgba(0,0,0,0.1)]" aria-label="Principal Navigation">
+                <a class="relative text-xs font-bold uppercase tracking-widest text-gray-200 transition-colors duration-300 hover:text-cyan-300 group"
+                    href="index.html#solutions">
+                    <span class="relative z-10">Soluciones</span>
+                    <span class="absolute inset-0 bg-cyan-400/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
+                    <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-cyan-300 transition-all duration-300 group-hover:w-full shadow-[0_0_8px_rgba(103,232,249,0.8)]"></span>
+                </a>
+                <a class="relative text-xs font-bold uppercase tracking-widest text-gray-200 transition-colors duration-300 hover:text-cyan-300 group"
+                    href="cost.html">
+                    <span class="relative z-10">Capsule</span>
+                    <span class="absolute inset-0 bg-cyan-400/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
+                    <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-cyan-300 transition-all duration-300 group-hover:w-full shadow-[0_0_8px_rgba(103,232,249,0.8)]"></span>
+                </a>
+                <a class="relative text-xs font-bold uppercase tracking-widest text-gray-200 transition-colors duration-300 hover:text-cyan-300 group"
+                    href="contact.html">
+                    <span class="relative z-10">Contacto</span>
+                    <span class="absolute inset-0 bg-cyan-400/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
+                    <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-cyan-300 transition-all duration-300 group-hover:w-full shadow-[0_0_8px_rgba(103,232,249,0.8)]"></span>
+                </a>
             </nav>
+
             <a href="contact.html"
-                class="flex items-center justify-center bg-background-light text-void px-4 sm:px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group">
+                class="hidden sm:inline-flex items-center justify-center bg-background-light text-void px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group"
+                aria-label="Initialize a new engineering project with Diar Studio">
                 Iniciar Proyecto
                 <span class="ml-2 font-mono transition-transform duration-300 group-hover:translate-x-1"
                     aria-hidden="true">_</span>
@@ -526,27 +429,8 @@
     </footer>
 
 
-    <!-- Scripts -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#3b83f7",
-                        "background-dark": "#101722",
-                        "background-light": "#f5f7f8",
-                        "void": "#0b0b0b"
-                    },
-                    fontFamily: { "display": ["Geist", "sans-serif"] },
-                    borderRadius: { "DEFAULT": "0.125rem" },
-                    zIndex: { "100": "100" }
-                }
-            }
-        };
-    </script>
-    <script src="js/cost-engine.js" defer></script>
+    <!-- [SCRIPTS] cost-engine as ESM module — consistente con el resto del ecosistema -->
+    <script src="js/cost-engine.js" type="module"></script>
 </body>
 
 </html>

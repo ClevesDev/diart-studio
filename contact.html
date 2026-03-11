@@ -78,29 +78,40 @@
 
     <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
         <header
-            class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-6 md:px-10 py-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
-            <div class="flex items-center gap-3">
+            class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+            <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                 <a href="index.html" class="flex items-center gap-2 group" aria-label="Return to Diar Studio Home">
-                    <svg class="w-9 h-9 text-primary fill-current transition-transform duration-500 group-hover:-translate-x-1"
-                        role="img" aria-hidden="true">
-                        <use href="#diar-logo"></use>
-                    </svg>
-                    <h2
-                        class="text-slate-900 dark:text-white text-xl font-black leading-tight tracking-tighter uppercase">
-                        Diar Studio</h2>
+                    <img src="assets/diarlogo.svg" alt="DiarStudio Logo" class="w-9 h-9 transition-transform duration-500 group-hover:rotate-3">
+                    <div class="flex flex-col">
+                        <span class="text-lg font-black tracking-tighter uppercase leading-none text-slate-900 dark:text-white">Diar Studio</span>
+                        <span class="text-[8px] font-black uppercase tracking-[0.2em] text-primary mt-1 hidden sm:block">Engineering v2026</span>
+                    </div>
                 </a>
-            </div>
-            <div class="hidden md:flex flex-1 justify-end gap-8">
-                <nav class="flex items-center gap-8">
-                    <a class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors"
-                        href="index.html#solutions">Soluciones</a>
-                    <a class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors"
-                        href="index.html#work">Capsule</a>
-                    <a class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors"
-                        href="index.html#contact">Contacto</a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex flex-row items-center justify-center gap-x-12 px-8 py-3 bg-gray-900/40 dark:bg-black/20 backdrop-blur-md border border-white/5 border-b-white/10 rounded-full z-50 shadow-[0_4px_30px_rgba(0,0,0,0.1)]" aria-label="Principal Navigation">
+                    <a class="relative text-xs font-bold uppercase tracking-widest text-gray-200 transition-colors duration-300 hover:text-cyan-300 group"
+                        href="index.html#solutions">
+                        <span class="relative z-10">Soluciones</span>
+                        <span class="absolute inset-0 bg-cyan-400/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
+                        <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-cyan-300 transition-all duration-300 group-hover:w-full shadow-[0_0_8px_rgba(103,232,249,0.8)]"></span>
+                    </a>
+                    <a class="relative text-xs font-bold uppercase tracking-widest text-gray-200 transition-colors duration-300 hover:text-cyan-300 group"
+                        href="cost.html">
+                        <span class="relative z-10">Capsule</span>
+                        <span class="absolute inset-0 bg-cyan-400/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
+                        <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-cyan-300 transition-all duration-300 group-hover:w-full shadow-[0_0_8px_rgba(103,232,249,0.8)]"></span>
+                    </a>
+                    <a class="relative text-xs font-bold uppercase tracking-widest text-gray-200 transition-colors duration-300 hover:text-cyan-300 group"
+                        href="contact.html">
+                        <span class="relative z-10">Contacto</span>
+                        <span class="absolute inset-0 bg-cyan-400/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
+                        <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-cyan-300 transition-all duration-300 group-hover:w-full shadow-[0_0_8px_rgba(103,232,249,0.8)]"></span>
+                    </a>
                 </nav>
+
                 <a href="index.html"
-                    class="flex min-w-[120px] cursor-pointer items-center justify-center bg-background-light text-void px-5 py-2 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group">
+                    class="hidden sm:inline-flex items-center justify-center bg-background-light text-void px-6 py-2.5 text-[10px] font-semibold uppercase tracking-tight rounded-sm border border-black/5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] active:scale-95 group">
                     <span>Return Terminal</span>
                 </a>
             </div>
@@ -111,8 +122,8 @@
             <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -z-10"></div>
             <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] -z-10"></div>
             <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                <!-- Left Column: Info -->
-                <div class="space-y-8 py-8">
+                <!-- Left Column: Info (Now second on mobile, first on desktop) -->
+                <div class="space-y-8 py-8 order-2 lg:order-1">
                     <div class="space-y-4">
                         <span class="text-primary font-bold text-xs tracking-widest-xs uppercase">Ingeniería de
                             Contacto</span>
@@ -139,65 +150,67 @@
                         </div>
                     </div>
                     <div class="pt-8 border-t border-slate-200 dark:border-slate-800">
-                        <div class="flex items-center gap-4">
-                            <div class="flex -space-x-3">
-                                <div
-                                    class="w-12 h-12 rounded-full border-2 border-background-dark bg-slate-800 flex items-center justify-center overflow-hidden shadow-lg">
-                                    <img class="w-full h-full object-cover" data-alt="CEO &amp; Founder"
-                                        src="./img/owner_item2.png" alt="CEO Diar Studio" />
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                            <!-- CEO & PRODUCT OWNER -->
+                            <article class="glass-card p-4 rounded-xl flex items-center gap-3 group cursor-default relative overflow-hidden transition-all duration-300">
+                                <div class="absolute -right-8 -top-8 w-20 h-20 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-all duration-700" aria-hidden="true"></div>
+                                <div class="relative shrink-0">
+                                    <img class="w-11 h-11 rounded-full border-2 border-primary/30 object-cover relative z-10 transition-transform duration-500 group-hover:scale-105 shadow-lg" 
+                                         src="./img/owner_item2.png" alt="CEO Diar Studio" loading="lazy" decoding="async">
                                 </div>
-                            </div>
-                            <p class="text-sm italic font-semibold text-slate-800 dark:text-slate-300 tracking-wide">CEO
-                                &amp; DUEÑO DE PRODUCTO</p>
+                                <div class="flex flex-col relative z-20">
+                                    <span class="text-[8px] font-black uppercase tracking-[0.2em] text-primary mb-0.5 [text-shadow:1px_1px_0px_rgba(255,255,255,0.3),-0.5px_-0.5px_0px_rgba(0,0,0,0.5)]">CEO & Dueño de Producto</span>
+                                    <h3 class="text-[10px] font-bold text-white uppercase tracking-tighter">Visión Estratégica</h3>
+                                </div>
+                            </article>
+
+                            <!-- CO-FOUNDER (NEW MEMBER) -->
+                            <article class="glass-card p-4 rounded-xl flex items-center gap-3 group cursor-default relative overflow-hidden transition-all duration-300 border-primary/5">
+                                <div class="absolute -right-8 -top-8 w-20 h-20 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-all duration-700" aria-hidden="true"></div>
+                                <div class="relative shrink-0">
+                                    <img class="w-11 h-11 rounded-full border-2 border-primary/30 object-cover relative z-10 transition-transform duration-500 group-hover:scale-105 shadow-lg" 
+                                         src="img/cofounder_item1.webp" alt="Co-Founder Diar Studio" loading="lazy" decoding="async">
+                                </div>
+                                <div class="flex flex-col relative z-20">
+                                    <span class="text-[8px] font-black uppercase tracking-[0.2em] text-primary mb-0.5 [text-shadow:1px_1px_0px_rgba(255,255,255,0.3),-0.5px_-0.5px_0px_rgba(0,0,0,0.5)]">Co-Founder</span>
+                                    <h3 class="text-[10px] font-bold text-white uppercase tracking-tighter">Ingeniería de Sistemas</h3>
+                                </div>
+                            </article>
                         </div>
 
                         <!-- Core Tech Stack -->
-                        <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 relative">
-                            <span
-                                class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-4 block">Stack
-                                Tecnológico Core</span>
-                            <div class="flex items-center gap-4 flex-wrap">
-                                <button type="button"
-                                    class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none"
-                                    data-info="Flutter: UI Cloud-Native SDK">
-                                    <img src="./assets/Iconos frameworks/flutter.svg" alt="Flutter"
-                                        class="w-full h-full object-contain filter drop-shadow">
+                        <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 relative w-full flex flex-col items-center lg:items-start text-center lg:text-left">
+                            <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-4 block">Stack Tecnológico Core</span>
+                            <div class="flex items-center justify-center lg:justify-start gap-4 flex-wrap">
+                                <button type="button" class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none" data-info="Flutter: UI Cloud-Native SDK">
+                                    <img src="./assets/iconos/frameworks/flutter.svg" alt="Flutter" title="Flutter" aria-hidden="true" class="w-full h-full object-contain filter drop-shadow">
                                 </button>
-                                <button type="button"
-                                    class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none"
-                                    data-info="Dart: Compiled Client Logic">
-                                    <img src="./assets/Iconos frameworks/dart.svg" alt="Dart"
-                                        class="w-full h-full object-contain bg-slate-50 rounded-md p-[2px] filter drop-shadow">
+                                <button type="button" class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none" data-info="Dart: Compiled Client Logic">
+                                    <img src="./assets/iconos/frameworks/dart.svg" alt="Dart" title="Dart" aria-hidden="true" class="w-full h-full object-contain bg-slate-50 rounded-md p-[2px] filter drop-shadow">
                                 </button>
-                                <button type="button"
-                                    class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none"
-                                    data-info="React: Atomic UI Optimization">
-                                    <img src="./assets/Iconos frameworks/react.svg" alt="React"
-                                        class="w-full h-full object-contain filter drop-shadow">
+                                <button type="button" class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none" data-info="C Language: Low-Level Architecture">
+                                    <img src="./assets/iconos/frameworks/c.svg" alt="C" title="C Language Architecture" aria-hidden="true" class="w-full h-full object-contain filter drop-shadow">
                                 </button>
-                                <button type="button"
-                                    class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none"
-                                    data-info="JavaScript: Core Engine Logistics">
-                                    <img src="./assets/Iconos frameworks/javascript.svg" alt="JavaScript"
-                                        class="w-full h-full object-contain filter drop-shadow rounded-sm">
+                                <button type="button" class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none" data-info="C#: Secure Enterprise Backend">
+                                    <img src="./assets/iconos/frameworks/csharp.svg" alt="C#" title="C# Modern Backend" aria-hidden="true" class="w-full h-full object-contain filter drop-shadow">
                                 </button>
-                                <button type="button"
-                                    class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none"
-                                    data-info="Node.js: High-I/O Backend">
-                                    <img src="./assets/Iconos frameworks/nodejs.svg" alt="Node.js"
-                                        class="w-full h-full object-contain filter drop-shadow">
+                                <button type="button" class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none" data-info="Python: Data Logistics & AI">
+                                    <img src="./assets/iconos/frameworks/python.svg" alt="Python" title="Python Data Logistics" aria-hidden="true" class="w-full h-full object-contain filter drop-shadow">
                                 </button>
-                                <button type="button"
-                                    class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none"
-                                    data-info="Docker: Architecture Container">
-                                    <img src="./assets/Iconos frameworks/docker.svg" alt="Docker"
-                                        class="w-full h-full object-contain filter drop-shadow">
+                                <button type="button" class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none" data-info="React: Atomic UI Optimization">
+                                    <img src="./assets/iconos/frameworks/react.svg" alt="React" title="React UI Components" aria-hidden="true" class="w-full h-full object-contain filter drop-shadow">
                                 </button>
-                                <button type="button"
-                                    class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none"
-                                    data-info="Firebase: Scalable Backend Services">
-                                    <img src="./assets/Iconos frameworks/firebase.svg" alt="Firebase"
-                                        class="w-full h-full object-contain filter drop-shadow">
+                                <button type="button" class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none" data-info="JavaScript: Core Engine Logistics">
+                                    <img src="./assets/iconos/frameworks/javascript.svg" alt="JavaScript" title="JavaScript Core Logic" aria-hidden="true" class="w-full h-full object-contain filter drop-shadow rounded-sm">
+                                </button>
+                                <button type="button" class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none" data-info="Node.js: High-I/O Backend Architecture">
+                                    <img src="./assets/iconos/frameworks/nodejs.svg" alt="Node.js" title="Node.js Engine" aria-hidden="true" class="w-full h-full object-contain filter drop-shadow">
+                                </button>
+                                <button type="button" class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none" data-info="Docker: Scalable Containerization">
+                                    <img src="./assets/iconos/frameworks/docker.svg" alt="Docker" title="Docker Infrastructure" aria-hidden="true" class="w-full h-full object-contain filter drop-shadow">
+                                </button>
+                                <button type="button" class="tech-icon w-6 h-6 md:w-7 md:h-7 opacity-40 hover:opacity-100 hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus:outline-none" data-info="Firebase: Cloud Backend Ecosystem">
+                                    <img src="./assets/iconos/frameworks/firebase.svg" alt="Firebase" title="Firebase Cloud Services" aria-hidden="true" class="w-full h-full object-contain filter drop-shadow">
                                 </button>
                             </div>
 
@@ -212,9 +225,8 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Form -->
-                <div
-                    class="bg-slate-100/50 dark:bg-slate-900/40 glass-effect border border-slate-200 dark:border-slate-800 rounded-xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                <!-- Right Column: Form (Now first on mobile, second on desktop) -->
+                <div class="order-1 lg:order-2 bg-slate-100/50 dark:bg-slate-900/40 glass-effect border border-slate-200 dark:border-slate-800 rounded-xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-4 opacity-10">
                         <span class="material-symbols-outlined text-9xl">architecture</span>
                     </div>

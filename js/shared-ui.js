@@ -67,18 +67,22 @@ export const initFormHandler = (formName) => {
             // [NEW] Prevent default to force 4-second delay
             e.preventDefault();
 
-            // Capture original state
-            const originalContent = btn.innerHTML;
-            
+            // [SECURITY] Preserve original DOM tree via cloneNode — never via innerHTML string.
+            const originalContent = btn.cloneNode(true);
+
             // Apply loading state
             btn.disabled = true;
             btn.classList.add('opacity-80', 'cursor-wait', 'pointer-events-none');
-            
-            // Dynamic text/icon feedback
-            btn.innerHTML = `
-                <span class="animate-pulse">Calculando infraestructura...</span>
-                <span class="material-symbols-outlined text-lg animate-spin ml-2">data_thresholding</span>
-            `;
+
+            // [SECURITY] Build loading state via DOM API — no innerHTML, no XSS surface.
+            btn.textContent = '';
+            const loadingText = document.createElement('span');
+            loadingText.className = 'animate-pulse';
+            loadingText.textContent = 'Calculando infraestructura...';
+            const loadingIcon = document.createElement('span');
+            loadingIcon.className = 'material-symbols-outlined text-lg animate-spin ml-2';
+            loadingIcon.textContent = 'data_thresholding';
+            btn.append(loadingText, loadingIcon);
 
             // Prepare Data for Netlify
             const formData = new FormData(form);
@@ -102,7 +106,9 @@ export const initFormHandler = (formName) => {
                     console.error('Submission Error:', error);
                     btn.disabled = false;
                     btn.classList.remove('opacity-80', 'cursor-wait', 'pointer-events-none');
-                    btn.innerHTML = originalContent;
+                    // [SECURITY] Restore original children from cloned node — no innerHTML.
+                    btn.textContent = '';
+                    btn.append(...originalContent.childNodes);
                     alert('Error en conexión. Por favor reintenta.');
                 });
         });
@@ -133,3 +139,50 @@ export const applyGlobalConfig = (config) => {
 
 
 
+
+/**
+ * @function initMobileMenu
+ * @description Logical controller for the mobile navigation dropdown.
+ * Manages the open/close state of the menu and ensures accessibility (ARIA).
+ * @module shared-ui.js
+ */
+export const initMobileMenu = () => {
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const icon = toggle?.querySelector('.material-symbols-outlined');
+
+    if (!toggle || !menu) return;
+
+    toggle.addEventListener('click', () => {
+        const isOpen = menu.classList.contains('active');
+        
+        if (isOpen) {
+            // Close State
+            menu.classList.remove('active');
+            menu.classList.add('hidden');
+            if (icon) icon.textContent = 'menu';
+            document.body.style.overflow = '';
+            toggle.setAttribute('aria-expanded', 'false');
+        } else {
+            // Open State
+            menu.classList.remove('hidden');
+            // Allow browser to register 'hidden' removal before adding 'active' for transition
+            setTimeout(() => menu.classList.add('active'), 10);
+            if (icon) icon.textContent = 'close';
+            document.body.style.overflow = 'hidden'; // Lock scroll
+            toggle.setAttribute('aria-expanded', 'true');
+        }
+    });
+
+    // Close on link click
+    const menuLinks = menu.querySelectorAll('a');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            menu.classList.remove('active');
+            menu.classList.add('hidden');
+            if (icon) icon.textContent = 'menu';
+            document.body.style.overflow = '';
+            toggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+};
