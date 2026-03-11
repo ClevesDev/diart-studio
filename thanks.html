@@ -31,18 +31,20 @@
 
     <!-- [ATMOSPHERE] SVG Sprites (Logo Architecture) -->
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;" aria-hidden="true">
-        <symbol id="diar-logo" viewBox="0 0 200 200">
-            <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold" fill="currentColor">{</text>
-            <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="currentColor">D</text>
-            <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="currentColor">R</text>
-            <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold" fill="currentColor">;</text>
-        </symbol>
-        <symbol id="diar-logo-colored" viewBox="0 0 200 200">
-            <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold" fill="#FBBF24">{</text>
-            <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="#FFFFFF">D</text>
-            <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="#FBBF24">R</text>
-            <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold" fill="#FFFFFF">;</text>
-        </symbol>
+        <defs>
+            <symbol id="diar-logo" viewBox="0 0 200 200">
+                <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold" fill="currentColor">&#123;</text>
+                <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="currentColor">D</text>
+                <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="currentColor">R</text>
+                <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold" fill="currentColor">&semi;</text>
+            </symbol>
+            <symbol id="diar-logo-colored" viewBox="0 0 200 200">
+                <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold" fill="#FBBF24">&#123;</text>
+                <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="#FFFFFF">D</text>
+                <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="#FBBF24">R</text>
+                <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold" fill="#FFFFFF">&semi;</text>
+            </symbol>
+        </defs>
     </svg>
 
     <div class="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden">
@@ -69,7 +71,7 @@
         <!-- Central Container -->
         <main class="relative z-10 w-full max-w-2xl px-6">
             <div
-                class="backdrop-blur-md bg-white/[0.02] border border-white/[0.08] rounded-xl p-8 md:p-16 flex flex-col items-center text-center shadow-2xl">
+                class="backdrop-blur-md bg-white/2 border border-white/8 rounded-xl p-8 md:p-16 flex flex-col items-center text-center shadow-2xl">
                 <!-- Status Indicator -->
                 <div class="mb-10 relative">
                     <div class="size-3 bg-emerald-500 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
@@ -87,17 +89,17 @@
                 <!-- CTA -->
                 <div class="flex flex-col items-center gap-6">
                     <a href="/"
-                        class="inline-flex items-center justify-center gap-2 bg-[#f5f7f8] text-[#0b0b0b] font-semibold py-4 px-10 rounded-sm transition-all duration-300 ease-out hover:-translate-y-0.5 shadow-xl hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] group">
+                        class="inline-flex items-center justify-center gap-2 bg-[#f5f7f8] text-void font-semibold py-4 px-10 rounded-sm transition-all duration-300 ease-out hover:-translate-y-0.5 shadow-xl hover:shadow-[0_0_20px_rgba(59,131,247,0.3)] group">
                         <span class="text-sm tracking-tighter uppercase">Return to Terminal</span>
                         <span
                             class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">east</span>
                     </a>
                     <!-- Metadata Footer inside box -->
                     <div class="flex gap-4 items-center w-full max-w-sm justify-center">
-                        <div class="h-[1px] flex-1 bg-white/10"></div>
+                        <div class="h-px flex-1 bg-white/10"></div>
                         <span class="text-[10px] font-mono text-slate-600 uppercase tracking-[0.2em]">ID de Despliegue:
                             DS-992-ALPHA</span>
-                        <div class="h-[1px] flex-1 bg-white/10"></div>
+                        <div class="h-px flex-1 bg-white/10"></div>
                     </div>
                 </div>
 

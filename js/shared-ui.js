@@ -1,9 +1,12 @@
 // DIAR STUDIO - Shared UI Components v1.0
+// [ARCHITECTURE] Centralized module for reusable, scalable UI components across the ecosystem.
 import { CONFIG } from './config.js';
 
-
 /**
- * Technical Stack Tooltip Logic
+ * @function initTechIcons
+ * @description Technical Stack Tooltip Logic. Handles hover states and dynamic 
+ * terminal-style information display for the tech stack icons.
+ * @module shared-ui.js
  * Used in contact.html and thanks.html
  */
 export const initTechIcons = () => {
@@ -44,7 +47,10 @@ export const initTechIcons = () => {
 };
 
 /**
- * Universal Form Submission Feedback
+ * @function initFormHandler
+ * @description Universal Form Submission Feedback handler. Provides simulated processing
+ * sequences (4s delay) and Netlify background submission to enhance User Experience.
+ * @param {string} formName - The `name` attribute of the HTML form to bind this handler to.
  * Used in index.html and contact.html
  */
 export const initFormHandler = (formName) => {
@@ -53,17 +59,52 @@ export const initFormHandler = (formName) => {
 
     if (form && btn) {
         form.addEventListener('submit', (e) => {
+            // Check HTML5 validity first
             if (!form.checkValidity()) {
-                e.preventDefault();
-                form.reportValidity();
-                return;
+                return; // Let browser handle basic alerts
             }
 
-            // Visual feedback
-            btn.innerHTML = `<span>Procesando...</span><span class="material-symbols-outlined text-lg animate-spin">autorenew</span>`;
-            btn.classList.add('opacity-80', 'cursor-not-allowed', 'pointer-events-none');
+            // [NEW] Prevent default to force 4-second delay
+            e.preventDefault();
+
+            // Capture original state
+            const originalContent = btn.innerHTML;
             
-            // Netlify handling is native
+            // Apply loading state
+            btn.disabled = true;
+            btn.classList.add('opacity-80', 'cursor-wait', 'pointer-events-none');
+            
+            // Dynamic text/icon feedback
+            btn.innerHTML = `
+                <span class="animate-pulse">Calculando infraestructura...</span>
+                <span class="material-symbols-outlined text-lg animate-spin ml-2">data_thresholding</span>
+            `;
+
+            // Prepare Data for Netlify
+            const formData = new FormData(form);
+
+            // 1. Submit in background
+            const submitPromise = fetch(form.action || '/', {
+                method: 'POST',
+                headers: { 'Accept': 'application/x-www-form-urlencoded;charset=UTF-8' },
+                body: new URLSearchParams(formData).toString()
+            });
+
+            // 2. Force 4 second wait timer
+            const timerPromise = new Promise(resolve => setTimeout(resolve, 4000));
+
+            // Wait for both before redirecting
+            Promise.all([submitPromise, timerPromise])
+                .then(() => {
+                    window.location.href = '/thanks';
+                })
+                .catch((error) => {
+                    console.error('Submission Error:', error);
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-80', 'cursor-wait', 'pointer-events-none');
+                    btn.innerHTML = originalContent;
+                    alert('Error en conexión. Por favor reintenta.');
+                });
         });
     }
 };
@@ -72,8 +113,10 @@ export const initFormHandler = (formName) => {
 
 
 /**
- * Apply Global Configuration to UI
- * Synchronizes links across all pages
+ * @function applyGlobalConfig
+ * @description Apply Global Configuration (e.g., dynamic URLs) to the DOM.
+ * Synchronizes links across all pages from constraints defined in config.js.
+ * @param {Object} config - The global system configuration object.
  */
 export const applyGlobalConfig = (config) => {
     const linkedinLinks = document.querySelectorAll('[id*="linkedin-link"]');

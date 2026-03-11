@@ -1,7 +1,17 @@
 // DIAR STUDIO - Main Landing Engine v1.0
+// [ARCHITECTURE] Bootstrapper for the primary landing experience.
+// Imports shared utilities to decouple logic.
+
 import { initFormHandler, applyGlobalConfig } from './shared-ui.js';
 import { CONFIG } from './config.js';
+import { BentoCarousel } from './bento-carousel.js';
 
+/**
+ * @function initAuditBot
+ * @description IntersectionObserver logic that orchestrates the "Audit Bot" avatar
+ * behavior dynamically according to scroll depth (hero, work, contact sections).
+ * Performance optimized by delegating animations to CSS via data-state toggling.
+ */
 const initAuditBot = () => {
     const bot = document.getElementById('audit-bot');
     const sections = ['hero', 'work', 'contact'].map(id => document.getElementById(id));
@@ -47,8 +57,15 @@ const initAuditBot = () => {
     ctaHeader && ctaObserver.observe(ctaHeader);
 };
 
+/**
+ * Initialization Hook
+ * Guaranteed to execute only after DOM tree is fully parsed.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     applyGlobalConfig(CONFIG);
     initAuditBot();
-    initFormHandler('contact');
+    initFormHandler('contact'); // Applies secure custom form submission logic
+    
+    // Iniciar Módulo Seguro del Bento Grid
+    new BentoCarousel('#flutter-carousel');
 });

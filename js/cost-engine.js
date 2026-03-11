@@ -1,6 +1,13 @@
 // DIAR STUDIO - Cost Estimator Engine v4.0
+// [ARCHITECTURE] Specialized module managing the dynamic pricing quoting system.
+// Handles complex state management for inputs (radio, sliders, checkboxes), PDF generation, and UI mirroring.
 
-// PDF Template Sync Logic
+/**
+ * @function syncPDF
+ * @description PDF Template Sync Logic. Mirrors the selected configuration into the hidden PDF template.
+ * Validates integrity dynamically. WARNING: innerHTML injections must be sanitized manually 
+ * if inputs are not static HTML text content.
+ */
 const syncPDF = () => {
     const container = document.getElementById('pdf-container');
     if (!container.innerHTML) return;
@@ -66,11 +73,17 @@ const messagesNegative = [
     "Reduciendo complejidad técnica",
     "Ajuste de recursos detectado",
     "Re-evaluando escalabilidad",
-    "Menos es más, a veces."
+    "Menos es más, a veces..."
 ];
 
 let lastAddonCount = 0;
 
+/**
+ * @function updatePrice
+ * @description Core Pricing Calculation Engine. Evaluates base costs, multiplies factors (rush delivery),
+ * aggregates add-ons, and subsequently paints the DOM (Terminal UI).
+ * @param {Event} e - DOM Input/Change Event triggers bot animations.
+ */
 const updatePrice = (e) => {
     const baseInput = document.querySelector('input[name="architecture"]:checked');
     const addonInputs = Array.from(document.querySelectorAll('input[name="addon"]:checked'));
@@ -89,10 +102,10 @@ const updatePrice = (e) => {
         const rect = target.getBoundingClientRect();
         const bot = document.getElementById('audit-bot');
         const isMobile = window.innerWidth <= 768;
-        
+
         // Calculate safe viewport position
         const targetY = Math.max(80, Math.min(rect.top, window.innerHeight - 100));
-        
+
         bot.style.top = `${targetY}px`;
         bot.style.left = isMobile ? '1rem' : '1.5rem';
         bot.style.position = 'fixed'; // Keep fixed to avoid jumps when switching modes
@@ -100,7 +113,7 @@ const updatePrice = (e) => {
         // Prevent immediate scroll override
         bot.setAttribute('data-lock', 'true');
         setTimeout(() => bot.removeAttribute('data-lock'), 1500);
-        
+
         if (total >= 10000) {
             showBotMessage("!ALELLUYA HABEMUS PRESUPUESTO!");
         } else if (e.target.name === 'addon' && currentAddonCount < lastAddonCount) {
@@ -157,6 +170,9 @@ const updatePrice = (e) => {
 };
 
 // Load External PDF Template
+// [SECURITY_NOTE]: Fetching external HTML templates directly into the DOM can be hazardous 
+// if the source server is compromised. In production, ensure CSP restrict connections.
+// Important: Local execution (file:///) will throw CORS errors. Requires a web server.
 fetch('template_pdf.html')
     .then(response => response.text())
     .then(html => {
@@ -282,10 +298,10 @@ window.addEventListener('scroll', () => {
     const bot = document.getElementById('audit-bot');
     if (!bot.hasAttribute('data-lock')) {
         const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-        const targetTop = 20 + (scrollPercent * 60); 
+        const targetTop = 20 + (scrollPercent * 60);
         bot.style.top = `${targetTop}%`;
         bot.style.position = 'fixed';
-        
+
         if (window.innerWidth <= 768) {
             bot.style.left = '1rem';
         } else {

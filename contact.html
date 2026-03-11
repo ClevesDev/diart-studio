@@ -19,7 +19,7 @@
 
     <!-- ENTERPRISE SECURITY POLICY -->
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://lh3.googleusercontent.com data:; connect-src 'self';" />
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://lh3.googleusercontent.com data:; connect-src 'self'; frame-ancestors 'none';" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
@@ -61,12 +61,18 @@
 
     <!-- [ATMOSPHERE] SVG Sprites (Logo Architecture) -->
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;" aria-hidden="true">
-        <symbol id="diar-logo" viewBox="0 0 200 200">
-            <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold" fill="currentColor">{</text>
-            <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="currentColor">D</text>
-            <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold" fill="currentColor">R</text>
-            <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold" fill="currentColor">;</text>
-        </symbol>
+        <defs>
+            <symbol id="diar-logo" viewBox="0 0 200 200">
+                <text x="30" y="135" font-family="monospace" font-size="120" font-weight="bold"
+                    fill="currentColor">&#123;</text>
+                <text x="65" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
+                    fill="currentColor">D</text>
+                <text x="100" y="120" font-family="sans-serif" font-size="80" font-weight="bold"
+                    fill="currentColor">R</text>
+                <text x="145" y="128" font-family="monospace" font-size="100" font-weight="bold"
+                    fill="currentColor">&semi;</text>
+            </symbol>
+        </defs>
     </svg>
 
     <!-- [ATMOSPHERE] Dynamic Ambient Lighting -->
@@ -104,11 +110,13 @@
                 </a>
             </div>
         </header>
+
         <main class="flex-1 flex items-center justify-center p-6 md:p-12 lg:p-24 relative overflow-hidden"
             id="contact-section">
             <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -z-10"></div>
             <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] -z-10"></div>
             <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <!-- Left Column: Info -->
                 <div class="space-y-8 py-8">
                     <div class="space-y-4">
                         <span class="text-primary font-bold text-xs tracking-widest-xs uppercase">Ingeniería de
@@ -140,12 +148,12 @@
                             <div class="flex -space-x-3">
                                 <div
                                     class="w-12 h-12 rounded-full border-2 border-background-dark bg-slate-800 flex items-center justify-center overflow-hidden shadow-lg">
-                                    <img class="w-full h-full object-cover" data-alt="CEO & Founder"
-                                        src="./img/owner_item2.png" />
+                                    <img class="w-full h-full object-cover" data-alt="CEO &amp; Founder"
+                                        src="./img/owner_item2.png" alt="CEO Diar Studio" />
                                 </div>
                             </div>
                             <p class="text-sm italic font-semibold text-slate-800 dark:text-slate-300 tracking-wide">CEO
-                                & DUEÑO DE PRODUCTO</p>
+                                &amp; DUEÑO DE PRODUCTO</p>
                         </div>
 
                         <!-- Core Tech Stack -->
@@ -208,6 +216,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Right Column: Form -->
                 <div
                     class="bg-slate-100/50 dark:bg-slate-900/40 glass-effect border border-slate-200 dark:border-slate-800 rounded-xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-4 opacity-10">
@@ -226,7 +236,7 @@
                                     for="full-name">Nombre Completo</label>
                                 <input
                                     class="w-full bg-white/5 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-800 rounded-sm px-4 py-3 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
-                                    id="full-name" name="full-name" placeholder="ALEXANDER VOGEL" type="text" />
+                                    id="full-name" name="full-name" placeholder="ALEXANDER VOGEL" type="text" required minlength="2" maxlength="100" />
                             </div>
                             <div class="space-y-2">
                                 <label
@@ -244,7 +254,7 @@
                                     for="phone">Número de Contacto</label>
                                 <input
                                     class="w-full bg-white/5 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-800 rounded-sm px-4 py-3 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
-                                    id="phone" name="phone" placeholder="+41 00 000 00 00" type="tel" />
+                                    id="phone" name="phone" placeholder="+41 00 000 00 00" type="tel" pattern="[\+0-9\s\-\(\)]+" maxlength="20" />
                             </div>
                             <div class="space-y-2">
                                 <label
@@ -307,54 +317,56 @@
                                 class="material-symbols-outlined text-lg transition-transform duration-300 group-hover:translate-x-1.5"
                                 aria-hidden="true">east</span>
                         </button>
-                </div>
-                <p class="text-[9px] text-center text-slate-500 uppercase tracking-widest leading-relaxed">
-                    Al hacer clic en ejecutar, aceptas nuestro
-                    <a class="underline underline-offset-2 hover:text-primary" href="#">Contrato Maestro de Servicio</a>
-                    y <a class="underline underline-offset-2 hover:text-primary" href="#">Protocolos de Datos</a>.
-                </p>
-                </form>
-            </div>
-    </div>
-    </main>
-    <footer class="border-t border-slate-200 dark:border-slate-800 py-12 px-6 md:px-10">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="flex items-center gap-3">
-                <svg class="w-10 h-10 text-primary fill-current" role="img" aria-hidden="true">
-                    <use href="#diar-logo"></use>
-                </svg>
-                <div class="flex flex-col">
-                    <span
-                        class="text-[10px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">Diar
-                        Studio © 2026</span>
-                    <span class="text-[9px] font-medium text-slate-500 uppercase tracking-[0.2em]">High-End
-                        Engineering</span>
+                        <p class="text-[9px] text-center text-slate-500 uppercase tracking-widest leading-relaxed">
+                            Al hacer clic en ejecutar, aceptas nuestro
+                            <a class="underline underline-offset-2 hover:text-primary" href="#">Contrato Maestro de
+                                Servicio</a>
+                            y <a class="underline underline-offset-2 hover:text-primary" href="#">Protocolos de
+                                Datos</a>.
+                        </p>
+                    </form>
                 </div>
             </div>
-            <div class="flex items-center gap-6">
-                <a class="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-primary transition-all duration-300 uppercase tracking-widest group"
-                    href="https://github.com/ClevesDev" target="_blank" rel="noopener noreferrer">
-                    <svg class="w-4 h-4 fill-current transition-transform duration-300 group-hover:scale-110"
-                        viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M64 5.103c-33.347 0-60.388 27.035-60.388 60.388 0 26.682 17.303 49.317 41.297 57.303 3.017.56 4.125-1.31 4.125-2.905 0-1.44-.056-6.197-.082-11.243-16.8 3.653-20.345-7.125-20.345-7.125-2.747-6.98-6.705-8.836-6.705-8.836-5.48-3.748.413-3.67.413-3.67 6.063.425 9.257 6.223 9.257 6.223 5.386 9.23 14.127 6.562 17.573 5.02.542-3.903 2.107-6.568 3.834-8.076-13.413-1.525-27.514-6.704-27.514-29.843 0-6.593 2.36-11.98 6.223-16.21-.628-1.52-2.695-7.662.584-15.98 0 0 5.07-1.623 16.61 6.19C53.7 35 58.867 34.327 64 34.304c5.13.023 10.3.694 15.127 2.033 11.526-7.813 16.59-6.19 16.59-6.19 3.287 8.317 1.22 14.46.593 15.98 3.872 4.23 6.215 9.617 6.215 16.21 0 23.194-14.127 28.3-27.574 29.796 2.167 1.874 4.097 5.55 4.097 11.183 0 8.08-.07 14.583-.07 16.572 0 1.607 1.088 3.49 4.148 2.897 23.98-7.994 41.263-30.622 41.263-57.294C124.388 32.14 97.35 5.104 64 5.104z"
-                            clip-rule="evenodd" fill="currentColor"></path>
+        </main>
+
+        <footer class="border-t border-slate-200 dark:border-slate-800 py-12 px-6 md:px-10">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <svg class="w-10 h-10 text-primary fill-current" role="img" aria-hidden="true">
+                        <use href="#diar-logo"></use>
                     </svg>
-                    GitHub
-                </a>
-                <a class="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-primary transition-all duration-300 uppercase tracking-widest group"
-                    href="#" id="linkedin-link">
-                    <svg class="w-4 h-4 fill-current transition-transform duration-300 group-hover:scale-110"
-                        viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M87.877 5.608H11.174c-3.673 0-6.65 2.886-6.65 6.448v77.101c0 3.562 2.978 6.451 6.65 6.451h76.703c3.673 0 6.646-2.89 6.646-6.451V12.056c0-3.561-2.973-6.448-6.646-6.448zM31.809 80.944H18.211V40.31h13.598v40.634zm-6.798-46.185h-.091c-4.56 0-7.516-3.119-7.516-7.023 0-3.983 3.043-7.017 7.693-7.017 4.651 0 7.512 3.033 7.602 7.017 0 3.905-2.95 7.023-7.688 7.023zm55.816 46.185H67.233v-21.74c0-5.464-1.97-9.191-6.886-9.191-3.761 0-5.993 2.515-6.973 4.942-.364.868-.453 2.08-.453 3.292v22.696H39.329s.178-36.823 0-40.634h13.593v5.761c1.805-2.768 5.029-6.717 12.249-6.717 8.947 0 15.656 5.804 15.656 18.291v23.3zM52.834 46.199c.024-.038.056-.084.088-.128v.128h-.088z"
-                            fill="currentColor"></path>
-                    </svg>
-                    LinkedIn
-                </a>
+                    <div class="flex flex-col">
+                        <span
+                            class="text-[10px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">Diar
+                            Studio © 2026</span>
+                        <span class="text-[9px] font-medium text-slate-500 uppercase tracking-[0.2em]">High-End
+                            Engineering</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a class="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-primary transition-all duration-300 uppercase tracking-widest group"
+                        href="https://github.com/ClevesDev" target="_blank" rel="noopener noreferrer">
+                        <svg class="w-4 h-4 fill-current transition-transform duration-300 group-hover:scale-110"
+                            viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M64 5.103c-33.347 0-60.388 27.035-60.388 60.388 0 26.682 17.303 49.317 41.297 57.303 3.017.56 4.125-1.31 4.125-2.905 0-1.44-.056-6.197-.082-11.243-16.8 3.653-20.345-7.125-20.345-7.125-2.747-6.98-6.705-8.836-6.705-8.836-5.48-3.748.413-3.67.413-3.67 6.063.425 9.257 6.223 9.257 6.223 5.386 9.23 14.127 6.562 17.573 5.02.542-3.903 2.107-6.568 3.834-8.076-13.413-1.525-27.514-6.704-27.514-29.843 0-6.593 2.36-11.98 6.223-16.21-.628-1.52-2.695-7.662.584-15.98 0 0 5.07-1.623 16.61 6.19C53.7 35 58.867 34.327 64 34.304c5.13.023 10.3.694 15.127 2.033 11.526-7.813 16.59-6.19 16.59-6.19 3.287 8.317 1.22 14.46.593 15.98 3.872 4.23 6.215 9.617 6.215 16.21 0 23.194-14.127 28.3-27.574 29.796 2.167 1.874 4.097 5.55 4.097 11.183 0 8.08-.07 14.583-.07 16.572 0 1.607 1.088 3.49 4.148 2.897 23.98-7.994 41.263-30.622 41.263-57.294C124.388 32.14 97.35 5.104 64 5.104z"
+                                clip-rule="evenodd" fill="currentColor"></path>
+                        </svg>
+                        GitHub
+                    </a>
+                    <a class="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-primary transition-all duration-300 uppercase tracking-widest group"
+                        href="#" id="linkedin-link" rel="noopener noreferrer" target="_blank">
+                        <svg class="w-4 h-4 fill-current transition-transform duration-300 group-hover:scale-110"
+                            viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M87.877 5.608H11.174c-3.673 0-6.65 2.886-6.65 6.448v77.101c0 3.562 2.978 6.451 6.65 6.451h76.703c3.673 0 6.646-2.89 6.646-6.451V12.056c0-3.561-2.973-6.448-6.646-6.448zM31.809 80.944H18.211V40.31h13.598v40.634zm-6.798-46.185h-.091c-4.56 0-7.516-3.119-7.516-7.023 0-3.983 3.043-7.017 7.693-7.017 4.651 0 7.512 3.033 7.602 7.017 0 3.905-2.95 7.023-7.688 7.023zm55.816 46.185H67.233v-21.74c0-5.464-1.97-9.191-6.886-9.191-3.761 0-5.993 2.515-6.973 4.942-.364.868-.453 2.08-.453 3.292v22.696H39.329s.178-36.823 0-40.634h13.593v5.761c1.805-2.768 5.029-6.717 12.249-6.717 8.947 0 15.656 5.804 15.656 18.291v23.3zM52.834 46.199c.024-.038.056-.084.088-.128v.128h-.088z"
+                                fill="currentColor"></path>
+                        </svg>
+                        LinkedIn
+                    </a>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
     </div>
 
     <!-- [SCRIPTS] Performance Hardening -->
